@@ -1,0 +1,105 @@
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+  min-width: 400px;
+  max-width: 800px;
+  border-radius: 5px;
+  background-color: var(--sidebar-background);
+  border-left: var(--sidebar-stroke);
+  z-index: 2;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+  padding-left: 40px;
+  overflow-x: auto;
+}
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+.tabs::-moz-scrollbar {
+  display: none;
+}
+
+.tab {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  min-width: 100px;
+  max-width: 200px;
+  border: var(--sidebar-stroke);
+  border-bottom: none;
+  box-sizing: border-box;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tabTitle {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--basic-black);
+  width: 60%;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.editor {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: calc(100% - 40px);
+  width: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.editorContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.closeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  height: 30px;
+  width: 30px;
+  padding: 2px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.emptyEditor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}

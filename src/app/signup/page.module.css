@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  font-family: var(--font-family);
+}
+
+.warning {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-light);
+  color: var(--warning-red);
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+  height: 100%;
+  background-color: var(--primary-gradient-1);
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 50%;
+  height: 100%;
+  background-color: var(--basic-white);
+}
+
+.titleLeft {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--basic-white);
+}
+
+.subtitleLeft {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-light);
+  color: var(--basic-white);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--basic-black);
+}
+
+.subtitle {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-light);
+  color: var(--primary-gradient-1);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  max-width: 500px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+  height: 20px;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  outline: none;
+  border: 2px solid var(--placeholder-primary-2);
+  padding: 20px 20px;
+  box-sizing: border-box;
+
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--primary-gradient-1);
+}
+.input:focus {
+  border: 2px solid var(--primary-gradient-1);
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 4rem;
+  border-radius: 2rem;
+  background-color: var(--primary-gradient-1);
+  color: var(--basic-white);
+  font-size: var(--font-size-m);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-light);
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.button:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 1150px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left {
+    display: none;
+  }
+
+  .right {
+    width: 100%;
+  }
+}
