@@ -6,7 +6,7 @@ import { useAppDispatch, useAppStore } from "@/lib/hooks";
 import { updateIsDarkMode } from "@/lib/features/global/settingSlice";
 import { openMenu } from "@/lib/features/sidePanel/menuSlice";
 
-export default function page() {
+export default function Page() {
   const store = useAppStore();
   const initialized = useRef(false);
   if (!initialized.current) {

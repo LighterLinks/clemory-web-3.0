@@ -15,7 +15,7 @@ const warningMessages = {
   invalid: "Invalid username or password",
 };
 
-export default function page() {
+export default function Page() {
   const userNameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [warning, setWarning] = useState<string>("");
@@ -53,10 +53,10 @@ export default function page() {
       <motion.div className={styles.left}>
         <p className={styles.titleLeft}>Welcome to Clemory!</p>
         <p className={styles.subtitleLeft}>
-          The world’s finest information storage
+          The world&apos;s finest information storage
         </p>
         <p className={styles.subtitleLeft}>
-          Don't have an account? <Link href="/signup">Join us now!</Link>
+          Don&apos;t have an account? <Link href="/signup">Join us now!</Link>
         </p>
       </motion.div>
       <motion.div className={styles.right}>
@@ -67,7 +67,14 @@ export default function page() {
           <GoogleLoginButton />
           <AppleLoginButton />
         </div>
-        <form className={styles.form} action={handleSignIn}>
+        <form
+          className={styles.form}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              handleSignIn(event);
+            }
+          }}
+        >
           <input
             ref={userNameRef}
             className={styles.input}

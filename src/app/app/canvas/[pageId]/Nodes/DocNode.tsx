@@ -25,6 +25,9 @@ import { deleteToast, infoToast } from "@/app/app/Assets/Toasts/toasts";
 import { deleteNode } from "@/app/API/API";
 import LocalStorage from "@/lib/localstroage";
 import { usePathname } from "next/navigation";
+import getQueryClient from "@/lib/getQueryClient";
+import { useMutation } from "@tanstack/react-query";
+import { deleteNode_async } from "@/app/API/API_async";
 
 export default function DocNode(props: NodeProps<INode>) {
   const userId = LocalStorage.getItem("userId") as string;
@@ -32,6 +35,18 @@ export default function DocNode(props: NodeProps<INode>) {
   const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
   const colorTheme = isDarkMode ? ColorSchemeDark : ColorScheme;
   const dispatch = useAppDispatch();
+  const queryClient = getQueryClient();
+
+  const deleteNodeInfo = useMutation({
+    mutationFn: (nodeInfo: INode) =>
+      deleteNode_async(userId, nodeInfo.nodeId, pageId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["nodes"],
+      });
+      deleteToast();
+    },
+  });
 
   const containerStyle = {
     width: NodeDocLayout.width,
@@ -91,9 +106,7 @@ export default function DocNode(props: NodeProps<INode>) {
 
   const handleDelete = useCallback(() => {
     if (window.confirm("Are you sure you want to delete this node?")) {
-      deleteNode(userId, props.data.nodeId, pageId).then((res) => {
-        deleteToast();
-      });
+      deleteNodeInfo.mutate(props.data);
     }
   }, []);
 

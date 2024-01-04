@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
 
   return (

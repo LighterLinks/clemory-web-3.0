@@ -13,7 +13,7 @@ const warningMessages = {
   invalid: "Invalid username or password",
 };
 
-export default function page() {
+export default function Page() {
   useEffect(() => {
     if (LocalStorage.getItem("isAuth") === "true") {
       window.location.href = "/app";
@@ -42,17 +42,17 @@ export default function page() {
       return;
     }
     loginStandAloneAccountIdExists(userName!).then((res) => {
-      if(res.result) {
+      if (res.result) {
         setWarning("Username already exists");
         return;
       }
     });
-    if(password !== confirmPassword) {
+    if (password !== confirmPassword) {
       setWarning(warningMessages.mismatch);
       return;
     }
     registerStandAlone(userEmail!, password!, userName!).then((res) => {
-      if(res.resCode.responseCode === 200) {
+      if (res.resCode.responseCode === 200) {
         setWarning("");
         LocalStorage.setItem("token", res.token);
         // localStorage.setItem("isAuth", "true");
@@ -77,7 +77,14 @@ export default function page() {
         <p className={styles.title}>Sign up</p>
         <p className={styles.subtitle}>Please sign up to continue</p>
         <p className={styles.warning}>{warning}</p>
-        <form className={styles.form}>
+        <form
+          className={styles.form}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              handleSignUp(event);
+            }
+          }}
+        >
           <input
             ref={userEmailRef}
             className={styles.input}

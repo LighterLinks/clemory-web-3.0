@@ -29,7 +29,7 @@ import { updateIsDarkMode } from "@/lib/features/global/settingSlice";
 import ChevronDown from "./Assets/Icons/ChevronDown";
 import LocalStorage from "@/lib/localstroage";
 
-export default function page() {
+export default function Page() {
   const userId = LocalStorage.getItem("userId");
   const isAuth = LocalStorage.getItem("isAuth");
 

@@ -5,7 +5,7 @@ import {
   ColorSchemeDark,
 } from "@/Designer";
 
-export const deleteToast = () => toast.error("Element deleted successfully!");
+export const deleteToast = () => toast.success("Element deleted successfully!");
 
 export const addToast = () => toast.success("Element added successfully!");
 

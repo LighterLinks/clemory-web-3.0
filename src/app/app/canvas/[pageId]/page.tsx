@@ -70,7 +70,7 @@ function FlowView() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["nodes"],
     queryFn: () => getAllNodes_async(userId, pageId),
-    // refetchInterval: 2000,
+    refetchInterval: 1000,
   });
 
   const addNodeInfo = useMutation({
@@ -229,7 +229,7 @@ function FlowView() {
   );
 }
 
-export default function page() {
+export default function Page() {
   const pageId = usePathname().split("/")[3];
   return (
     <div id="flow-canvas" className={styles.flowView}>
