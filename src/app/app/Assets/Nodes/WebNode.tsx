@@ -14,7 +14,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import EditIcon from "./Assets/EditIcon";
 import CrossIcon from "./Assets/CrossIcon";
-import DocIcon from "./Assets/DocIcon";
+import NoteIcon from "./Assets/NoteIcon";
 import { useCallback } from "react";
 import { getTitleAndText } from "./Assets/utils";
 import {
@@ -35,18 +35,6 @@ export default function WebNode(props: NodeProps<INode>) {
   const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
   const colorTheme = isDarkMode ? ColorSchemeDark : ColorScheme;
   const dispatch = useAppDispatch();
-  const queryClient = getQueryClient();
-
-  const deleteNodeInfo = useMutation({
-    mutationFn: (nodeInfo: INode) =>
-      deleteNode_async(userId, nodeInfo.nodeId, pageId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["nodes"],
-      });
-      deleteToast();
-    },
-  });
 
   const containerStyle = {
     width: NodeWebLayout.width,
@@ -133,7 +121,9 @@ export default function WebNode(props: NodeProps<INode>) {
 
   const handleDelete = useCallback(() => {
     if (window.confirm("Are you sure you want to delete this node?")) {
-      deleteNodeInfo.mutate(props.data);
+      deleteNode(userId, props.data.nodeId, pageId).then((res) => {
+        deleteToast();
+      });
     }
   }, []);
 

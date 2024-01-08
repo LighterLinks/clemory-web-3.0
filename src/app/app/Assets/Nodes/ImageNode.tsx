@@ -15,6 +15,7 @@ import getQueryClient from "@/lib/getQueryClient";
 import { useMutation } from "@tanstack/react-query";
 import { deleteNode_async } from "@/app/API/API_async";
 import { deleteToast } from "@/app/app/Assets/Toasts/toasts";
+import Image from "next/image";
 
 export default function ImageNode(props: NodeProps<INode>) {
   const userId = LocalStorage.getItem("userId") as string;
@@ -106,8 +107,8 @@ export default function ImageNode(props: NodeProps<INode>) {
         onHoverStart={() => setIsDeletable(true)}
         onHoverEnd={() => setIsDeletable(false)}
       >
-        <img
-          src={props.data.imageUrl}
+        <Image
+          src={props.data.imageUrl!}
           alt="image"
           width={imgWidth}
           height={imgHeight}

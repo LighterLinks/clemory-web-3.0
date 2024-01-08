@@ -36,17 +36,33 @@ export default function Page() {
   }, []);
 
   return (
-    <div>
-      <h1>Profile</h1>
-      <Image src={userInfo?.avatarUrl!} width={200} height={200} alt="avatar" />
-      <h3>User ID: {userInfo?.type}</h3>
-      <h3>Username: {userInfo?.displayName}</h3>
-      <h3>Email: {userInfo?.email}</h3>
-      <Link href="/">
-        <button className={styles.button} onClick={handleLogout}>
-          Logout
-        </button>
-      </Link>
+    <div className={styles.container}>
+      <h1 className={styles.title}>My Profile</h1>
+      <hr className={styles.hr} />
+      <div className={styles.subSection}>
+        <Image
+          src={userInfo?.avatarUrl!}
+          width={100}
+          height={100}
+          alt="avatar"
+        />
+      </div>
+      <div className={styles.subSection}>
+        <p className={styles.label}>User name</p>
+        <input
+          type="text"
+          className={styles.input}
+          defaultValue={userInfo?.displayName}
+        />
+      </div>
+      <div className={styles.subSection}>
+        <p className={styles.label}>Email</p>
+        <input
+          type="text"
+          className={styles.input}
+          defaultValue={userInfo?.email}
+        />
+      </div>
     </div>
   );
 }

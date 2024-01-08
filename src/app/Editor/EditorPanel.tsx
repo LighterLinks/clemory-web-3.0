@@ -16,10 +16,11 @@ import {
 } from "@/lib/features/editor/editorSlice";
 import { ColorScheme, ColorSchemeDark } from "@/Designer";
 import CrossIcon from "./Assets/CrossIcon";
-import { getTitleAndText } from "../app/canvas/[pageId]/Nodes/Assets/utils";
+import { getTitleAndText } from "../app/Assets/Nodes/Assets/utils";
 import Editor from "./Editor";
 import DoubleChevron from "./Assets/DoubleChevron";
 import EmptyDocIcon from "./Assets/EmptyDocIcon";
+import { defaultTransition } from "@/Designer/animation";
 
 export default function EditorPanel({
   pageId,
@@ -97,10 +98,7 @@ export default function EditorPanel({
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 100 }}
-          transition={{
-            type: "tween",
-            duration: 0.1,
-          }}
+          transition={defaultTransition}
         >
           <button className={styles.closeBtn} onClick={handleClosePanel}>
             <DoubleChevron size={20} color={colorTheme.primaryGrey4} />

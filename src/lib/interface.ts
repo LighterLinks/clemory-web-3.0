@@ -14,6 +14,18 @@ export interface IPage {
     pageType?: string;
 }
 
+export const NODETYPE = {
+    'TEXT': 'text',
+    'WEB': 'web',
+    'DOC': 'doc',
+    'IMAGE': 'image',
+    'AUDIO': 'audio',
+    'NOTE': 'note',
+    'WEBPH': 'webph',
+    'IMAGEPH': 'imageph',
+    'AUDIOPH': 'audioph',
+}
+
 export interface INode {
     nodeId: string;
     type: string;

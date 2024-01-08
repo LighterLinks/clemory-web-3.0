@@ -1,0 +1,240 @@
+.container {
+  display: flex;
+  position: absolute;
+  right: 0px;
+  width: 320px;
+  height: 50vh;
+  background-color: var(--toolbar-background-2);
+  border: var(--toolbar-stroke);
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.header {
+  width: 100%;
+  height: 35px;
+  background-color: var(--toolbar-background-2);
+  color: var(--toolbar-color);
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: var(--toolbar-stroke);
+}
+
+.clearButton {
+  display: flex;
+  white-space: nowrap;
+  font-weight: 300;
+  font-size: 0.8rem;
+  width: 20px;
+  height: 20px;
+  user-select: none;
+  cursor: pointer;
+}
+.clearButton:hover {
+  text-decoration: underline;
+}
+
+.body {
+  position: absolute;
+  top: 35px;
+  left: 0px;
+  width: 100%;
+  /* height: calc(100% - 120px); */
+  background-color: var(--toolbar-background-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  /* height: 85px; */
+  /* min-height: 85px; */
+  height: fit-content;
+  background-color: var(--toolbar-background-2);
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 10px 0px 10px 0px;
+  /* align-items: center; */
+}
+
+.chatInputContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  /* height: 50px; */
+  height: fit-content;
+  max-height: 250px;
+  min-height: 30px;
+
+  border-radius: 15px;
+  border: var(--toolbar-stroke);
+  background-color: var(--toolbar-background);
+  box-sizing: border-box;
+  padding: 3px 10px;
+
+  align-items: center;
+}
+
+.chatInput {
+  box-sizing: border-box;
+  padding: 0px 10px;
+  width: 95%;
+  /* height: 90%; */
+  max-height: 240px;
+  min-height: 10px;
+
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-weight: 300;
+  font-family: "Roboto";
+  background-color: transparent;
+  color: var(--toolbar-color);
+
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+
+  resize: none;
+}
+
+.sendButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.chatHistory {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.UserChat {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+
+  /* padding: 20px 100px; */
+  padding: 20px 30px 20px 100px;
+  box-sizing: border-box;
+
+  background-color: var(--toolbar-background);
+}
+
+.BotChat {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  /* align-items: center; */
+  width: 100%;
+
+  /* padding: 20px 30px; */
+  padding: 20px 30px 20px 30px;
+  box-sizing: border-box;
+
+  background-color: var(--toolbar-background-2);
+}
+
+.BotIcon {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  /* border: 1px solid #3A4356; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.IconWrapper {
+  position: relative;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-left: 15px;
+}
+
+.CopyIcon {
+  position: relative;
+  width: 20px;
+
+  margin-top: 5px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.ToFlowIcon {
+  position: relative;
+  width: 20px;
+
+  margin-top: 5px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.chatUnitText {
+  width: calc(90% - 50px);
+  line-break: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+
+  font-size: 13px;
+  line-height: 200%; /* 26px */
+  font-weight: 400;
+  font-family: "Roboto";
+  color: var(--toolbar-color);
+
+  margin-left: 20px;
+}
+
+.chatUnitTextAlt {
+  width: 90%;
+
+  line-break: auto;
+  white-space: normal;
+  word-wrap: break-word;
+
+  font-size: 13px;
+  line-height: 200%; /* 26px */
+  letter-spacing: 0.65px;
+  font-weight: 400;
+  font-family: "helvetica";
+  color: var(--toolbar-color);
+
+  margin-left: 0px;
+}

@@ -22,7 +22,14 @@ export const ColorScheme = {
   sideBarBackground: "#FFFFFF",
   sideBarBackgroundHighlight: "#F6F6F6",
   sideBarFontColor: "#000000",
+  sideBarFontColorUnselected: "#757575",
   sideBarStrokeColor: "#f6f6f6",
+
+  toolbarBackground: "#FFFFFF",
+  toolbarBackground2: "#f6f6f6",
+  toolbarFontColor: "#000000",
+
+  highlightBorderColor: "#8d64ff",
 
   nodeBgColors: ["#FFFFFF", "#FDFAEF", "#E3E9F6"],
   nodeColor: "#000000",
@@ -42,16 +49,23 @@ export const ColorSchemeDark = {
   basicBlack: "#000000",
   warningRed: "#D55F5A",
 
-  flowBackground: "#F1F0F0",
+  flowBackground: "#14131B",
   dotColor: "#AAAAAA",
 
-  defaultBackground: "#13111C",
-  sideBarBackground: "#151238",
-  sideBarBackgroundHighlight: "#45495D",
+  defaultBackground: "#14131B",
+  sideBarBackground: "#000000",
+  sideBarBackgroundHighlight: "#14131B",
   sideBarFontColor: "#FFFFFF",
+  sideBarFontColorUnselected: "#999797",
   sideBarStrokeColor: "#ffffff3b",
 
-  nodeBgColors: ["#2f2b3a", "#2f2b3a", "#2f2b3a"],
+  toolbarBackground: "#000000",
+  toolbarBackground2: "#2C2C38",
+  toolbarFontColor: "#FFFFFF",
+
+  highlightBorderColor: "#e34099",
+
+  nodeBgColors: ["#373641", "#2f2b3a", "#2f2b3a"],
   nodeColor: "#FFFFFF",
   nodeIconColor: "#FFFFFF",
 };
@@ -121,7 +135,7 @@ export const NodeWebLayout = {
   urlMarginTop: 14,
 };
 
-export const NodeDocLayout = {
+export const NodeNoteLayout = {
   width: 300,
   height: 200,
 
@@ -215,19 +229,19 @@ export const NodeAudioLayout = {
 };
 
 export const NodeTextStyle = {
-    title: {
-        fontSize: 14,
-        fontWeight: 400,
-        fontFamily: "Inter",
-    },
-    desc: {
-        fontSize: 14,
-        fontWeight: 400,
-        fontFamily: "Inter",
-    },
-    url: {
-        fontSize: 14,
-        fontWeight: 400,
-        fontFamily: "Inter",
-    },
+  title: {
+    fontSize: 14,
+    fontWeight: 400,
+    fontFamily: "Inter",
+  },
+  desc: {
+    fontSize: 14,
+    fontWeight: 400,
+    fontFamily: "Inter",
+  },
+  url: {
+    fontSize: 14,
+    fontWeight: 400,
+    fontFamily: "Inter",
+  },
 };

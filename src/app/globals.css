@@ -26,11 +26,19 @@
   --default-background: #f6f6f6;
   --highlight-border-color: #8d64ff;
 
-  --sidebar-background: #FFFFFF;
+  --sidebar-background: #ffffff;
   --sidebar-color: #000000;
   --sidebar-stroke: 1px solid #f6f6f6;
+  --sidebar-divider-color: #F6F6F6;
 
-  --cell-card-background: #FFFFFF;
+  --toolbar-background: #ffffff;
+  --toolbar-background-2: #f6f6f6;
+  --toolbar-color: #000000;
+  --toolbar-stroke: 1px solid #e7e7e7;
+
+  --bottombar-node-background: #f6f6f6;
+
+  --cell-card-background: #ffffff;
   --cell-card-color: #000000;
   --cell-card-stroke: 1px solid #f6f6f6;
 
@@ -67,22 +75,30 @@
   --primary-grey-4: #afa8ba;
 
   --basic-white: #000000;
-  --basic-black: #FFFFFF;
+  --basic-black: #ffffff;
   --warning-red: #d55f5a;
   --warning-yellow: #ffff00;
   --placeholder-grey: #b3b3b3;
   --placeholder-primary: rgba(141, 100, 255, 0.5);
   --placeholder-primary-2: rgba(252, 78, 209, 0.5);
 
-  --default-background: #13111C;
-  --highlight-border-color: #E34099;
+  --default-background: #14131b;
+  --highlight-border-color: #e34099;
 
-  --sidebar-background: #151238;
-  --sidebar-color: #FFFFFF;
-  --sidebar-stroke: 1px solid #ffffff3b;
+  --sidebar-background: #000000;
+  --sidebar-color: #ffffff;
+  --sidebar-stroke: 1px solid rgba(255, 255, 255, 0.1);
+  --sidebar-divider-color: #999797;
 
-  --cell-card-background: #151238;
-  --cell-card-color: #FFFFFF;
+  --toolbar-background: #000000;
+  --toolbar-background-2: #2C2C38;
+  --toolbar-color: #ffffff;
+  --toolbar-stroke: 1px solid rgba(255, 255, 255, 0.1);
+
+  --bottombar-node-background: #373641;
+
+  --cell-card-background: #000000;
+  --cell-card-color: #ffffff;
   --cell-card-stroke: 1px solid #ffffff3b;
 
   --font-family: "Roboto", sans-serif;

@@ -1,4 +1,5 @@
 import { HiPencilAlt } from "react-icons/hi";
+import { PiNotePencilLight } from "react-icons/pi";
 
 export default function EditIcon({
   size,
@@ -7,5 +8,5 @@ export default function EditIcon({
   size: number;
   color: string;
 }) {
-  return <HiPencilAlt size={size} color={color} />;
+  return <PiNotePencilLight size={size} color={color} />;
 }

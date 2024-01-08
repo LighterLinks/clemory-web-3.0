@@ -1,6 +1,6 @@
 import { TbNotes } from "react-icons/tb";
 
-export default function DocIcon({
+export default function NoteIcon({
   size,
   color,
 }: {

@@ -8,9 +8,9 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <div>
-      <h1>Community</h1>
-      <h2>Coming Soon</h2>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Community</h1>
+      <h2 className={styles.subTitle}>Coming Soon</h2>
     </div>
   );
 }

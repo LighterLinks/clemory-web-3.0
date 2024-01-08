@@ -1,0 +1,15 @@
+.bottomBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* background-color: var(--sidebar-background); */
+    background-color: var(--default-background);
+    border: var(--sidebar-stroke);
+    position: relative;
+    bottom: 0px;
+    width: 100%;
+    /* max-width: 700px; */
+    height: 60px;
+    /* border-radius: 6px; */
+}

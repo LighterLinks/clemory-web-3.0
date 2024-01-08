@@ -2,7 +2,7 @@
 
 import styles from "./index.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { color, motion } from "framer-motion";
+import { AnimatePresence, color, motion } from "framer-motion";
 import { ColorScheme, ColorSchemeDark, SidebarLayout } from "@/Designer";
 import ClemoryLogoAlt from "../Assets/Icons/ClemoryLogoAlt";
 import BoardIcon from "../Assets/Icons/BoardIcon";
@@ -21,8 +21,7 @@ import CalendarIcon from "../Assets/Icons/Calendar";
 import CommunityIcon from "../Assets/Icons/CommunityIcon";
 import { updateIsDarkMode } from "@/lib/features/global/settingSlice";
 import ListViewIcon from "../Assets/Icons/ListViewIcon";
-
-const TRANSITION_DURATION = 0.3;
+import { defaultTransition } from "@/Designer/animation";
 
 export default function SidePanel() {
   const store = useAppStore();
@@ -32,19 +31,21 @@ export default function SidePanel() {
   }
   const isMenuOpen = useAppSelector((state) => state.menuSlice.isOpen);
   const openedMenu = useAppSelector((state) => state.menuSlice.openedMenu);
+  const isSidebarOpen = useAppSelector(
+    (state) => state.toolbarSlice.isSidebarOpen
+  );
   const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
   const dispatch = useAppDispatch();
 
-  const [ colorTheme, setColorTheme ] = useState<typeof ColorScheme>(ColorScheme);
+  const [colorTheme, setColorTheme] = useState<typeof ColorScheme>(ColorScheme);
 
   useEffect(() => {
-    if(localStorage.getItem("theme") === "dark") {
+    if (localStorage.getItem("theme") === "dark") {
       dispatch(updateIsDarkMode(true));
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-    else {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
       dispatch(updateIsDarkMode(false));
-      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.setAttribute("data-theme", "light");
     }
     setColorTheme(isDarkMode ? ColorSchemeDark : ColorScheme);
   }, [isDarkMode]);
@@ -56,7 +57,11 @@ export default function SidePanel() {
         return (
           <HomeIcon
             size={30}
-            color={flag ? colorTheme.sideBarFontColor : colorTheme.primaryGrey2}
+            color={
+              flag
+                ? colorTheme.sideBarFontColor
+                : colorTheme.sideBarFontColorUnselected
+            }
           />
         );
       },
@@ -68,7 +73,11 @@ export default function SidePanel() {
         return (
           <CommunityIcon
             size={30}
-            color={flag ? colorTheme.sideBarFontColor : colorTheme.primaryGrey2}
+            color={
+              flag
+                ? colorTheme.sideBarFontColor
+                : colorTheme.sideBarFontColorUnselected
+            }
           />
         );
       },
@@ -99,7 +108,7 @@ export default function SidePanel() {
     //   link: "/app/canvas",
     // },
   ];
-  
+
   const subItems = [
     {
       name: "Profile",
@@ -107,7 +116,11 @@ export default function SidePanel() {
         return (
           <UserLogo
             size={30}
-            color={flag ? colorTheme.sideBarFontColor : colorTheme.primaryGrey2}
+            color={
+              flag
+                ? colorTheme.sideBarFontColor
+                : colorTheme.sideBarFontColorUnselected
+            }
           />
         );
       },
@@ -119,14 +132,18 @@ export default function SidePanel() {
         return (
           <SettingLogo
             size={30}
-            color={flag ? colorTheme.sideBarFontColor : colorTheme.primaryGrey2}
+            color={
+              flag
+                ? colorTheme.sideBarFontColor
+                : colorTheme.sideBarFontColorUnselected
+            }
           />
         );
       },
       link: "/app/settings",
     },
   ];
-  
+
   const footerItems = [
     {
       name: "Help",
@@ -158,10 +175,10 @@ export default function SidePanel() {
         localStorage.removeItem("isAuth");
         localStorage.removeItem("theme");
         localStorage.removeItem("token");
-      }
+      },
     },
   ];
-  
+
   const toggleMenu = useCallback(() => {
     dispatch(updateIsMenuOpen(!isMenuOpen));
   }, [isMenuOpen]);
@@ -171,165 +188,172 @@ export default function SidePanel() {
   }, []);
 
   return (
-    <motion.nav
-      className={styles.container}
-      animate={{ width: isMenuOpen ? SidebarLayout.width : 100 }}
-      transition={{ duration: TRANSITION_DURATION }}
-    >
-      <motion.div
+    <AnimatePresence>
+      {isSidebarOpen && (
+        <motion.nav
+          key="side-panel"
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={defaultTransition}
+          className={styles.container}
+        >
+          {/* <motion.div
         className={styles.expandIcon}
         onClick={toggleMenu}
         animate={{ left: isMenuOpen ? 225 : 85, rotate: isMenuOpen ? 0 : 180 }}
         transition={{ duration: TRANSITION_DURATION }}
       >
         <LeftExpandIcon size={24} color={colorTheme.sideBarFontColor} />
-      </motion.div>
-      <div
-        className={styles.header}
-        style={{ width: isMenuOpen ? "80%" : "fit-content" }}
-      >
-        <div
-          className={styles.logo}
-          onClick={() => {
-            window.location.href = "/";
-          }}
-        >
-          <ClemoryLogoAlt size={45} />
-        </div>
-        {isMenuOpen && (
-          <div className={styles.title}>
-            <h1>Clemory</h1>
-            <h2>for everyone</h2>
+      </motion.div> */}
+          <div
+            className={styles.header}
+            style={{ width: isMenuOpen ? "80%" : "fit-content" }}
+          >
+            <div
+              className={styles.logo}
+              onClick={() => {
+                window.location.href = "/";
+              }}
+            >
+              <ClemoryLogoAlt size={45} />
+            </div>
+            {isMenuOpen && (
+              <div className={styles.title}>
+                <h1>Clemory</h1>
+                <h2>for everyone</h2>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      <hr className={styles.divider} />
-      <p
-        className={styles.dividerText}
-        style={{ width: isMenuOpen ? "80%" : "fit-content" }}
-      >
-        MAIN
-      </p>
-      <div className={styles.body}>
-        {mainItems.map((item, index) => {
-          return (
-            <Link
-              href={item.link}
-              className={styles.link}
-              onClick={() => {
-                handleClickLink(index);
-              }}
-              key={index}
-            >
-              <motion.div
-                className={styles.menu}
-                animate={{
-                  backgroundColor:
-                    openedMenu === index
-                      ? colorTheme.sideBarBackgroundHighlight
-                      : colorTheme.sideBarBackground,
-                }}
-                style={{
-                  paddingLeft: isMenuOpen ? 0 : 0,
-                  minWidth: isMenuOpen ? 190 : 70,
-                  color:
-                    openedMenu === index
-                      ? colorTheme.sideBarFontColor
-                      : colorTheme.primaryGrey2,
-                }}
-              >
-                <div
-                  className={styles.icon}
-                  style={{ width: isMenuOpen ? 22 : 50 }}
+          <hr className={styles.divider} />
+          <p
+            className={styles.dividerText}
+            style={{ width: isMenuOpen ? "80%" : "fit-content" }}
+          >
+            MAIN
+          </p>
+          <div className={styles.body}>
+            {mainItems.map((item, index) => {
+              return (
+                <Link
+                  href={item.link}
+                  className={styles.link}
+                  onClick={() => {
+                    handleClickLink(index);
+                  }}
+                  key={index}
                 >
-                  {item.icon(openedMenu === index)}
-                </div>
-                {isMenuOpen && <p>{item.name}</p>}
-              </motion.div>
-            </Link>
-          );
-        })}
-        <hr className={styles.divider} />
-        <p
-          className={styles.dividerText}
-          style={{ width: isMenuOpen ? "80%" : "fit-content" }}
-        >
-          SETTINGS
-        </p>
-        {subItems.map((item, index) => {
-          return (
-            <Link
-              href={item.link}
-              className={styles.link}
-              onClick={() => {
-                handleClickLink(index + mainItems.length);
-              }}
-              key={index + mainItems.length}
+                  <motion.div
+                    className={styles.menu}
+                    animate={{
+                      backgroundColor:
+                        openedMenu === index
+                          ? colorTheme.sideBarBackgroundHighlight
+                          : colorTheme.sideBarBackground,
+                    }}
+                    style={{
+                      paddingLeft: isMenuOpen ? 0 : 0,
+                      minWidth: isMenuOpen ? 190 : 70,
+                      color:
+                        openedMenu === index
+                          ? colorTheme.sideBarFontColor
+                          : colorTheme.sideBarFontColorUnselected,
+                    }}
+                  >
+                    <div
+                      className={styles.icon}
+                      style={{ width: isMenuOpen ? 22 : 50 }}
+                    >
+                      {item.icon(openedMenu === index)}
+                    </div>
+                    {isMenuOpen && <p>{item.name}</p>}
+                  </motion.div>
+                </Link>
+              );
+            })}
+            <hr className={styles.divider} />
+            <p
+              className={styles.dividerText}
+              style={{ width: isMenuOpen ? "80%" : "fit-content" }}
             >
-              <motion.div
-                className={styles.menu}
-                animate={{
-                  backgroundColor:
-                    openedMenu === index + mainItems.length
-                      ? colorTheme.sideBarBackgroundHighlight
-                      : colorTheme.sideBarBackground,
-                }}
-                style={{
-                  paddingLeft: isMenuOpen ? 0 : 0,
-                  minWidth: isMenuOpen ? 190 : 70,
-                  color:
-                    openedMenu === index + mainItems.length
-                      ? colorTheme.sideBarFontColor
-                      : colorTheme.primaryGrey2,
-                }}
-              >
-                <div
-                  className={styles.icon}
-                  style={{ width: isMenuOpen ? 22 : 50 }}
+              SETTINGS
+            </p>
+            {subItems.map((item, index) => {
+              return (
+                <Link
+                  href={item.link}
+                  className={styles.link}
+                  onClick={() => {
+                    handleClickLink(index + mainItems.length);
+                  }}
+                  key={index + mainItems.length}
                 >
-                  {item.icon(openedMenu === index + mainItems.length)}
-                </div>
-                {isMenuOpen && <p>{item.name}</p>}
-              </motion.div>
-            </Link>
-          );
-        })}
-      </div>
-      <div className={styles.footer}>
-        <hr className={styles.divider} />
-        {footerItems.map((item, index) => {
-          return (
-            <Link
-              href={item.link}
-              className={styles.link}
-              onClick={() => {
-                handleClickLink(index + mainItems.length + subItems.length);
-                if(item.action) {
-                  item.action();
-                }
-              }}
-              key={index + mainItems.length + subItems.length}
-            >
-              <motion.div
-                className={styles.menu}
-                style={{
-                  paddingLeft: isMenuOpen ? 0 : 0,
-                  minWidth: isMenuOpen ? 190 : 70,
-                  color: item.color,
-                }}
-              >
-                <div
-                  className={styles.icon}
-                  style={{ width: isMenuOpen ? 22 : 50 }}
+                  <motion.div
+                    className={styles.menu}
+                    animate={{
+                      backgroundColor:
+                        openedMenu === index + mainItems.length
+                          ? colorTheme.sideBarBackgroundHighlight
+                          : colorTheme.sideBarBackground,
+                    }}
+                    style={{
+                      paddingLeft: isMenuOpen ? 0 : 0,
+                      minWidth: isMenuOpen ? 190 : 70,
+                      color:
+                        openedMenu === index + mainItems.length
+                          ? colorTheme.sideBarFontColor
+                          : colorTheme.sideBarFontColorUnselected,
+                    }}
+                  >
+                    <div
+                      className={styles.icon}
+                      style={{ width: isMenuOpen ? 22 : 50 }}
+                    >
+                      {item.icon(openedMenu === index + mainItems.length)}
+                    </div>
+                    {isMenuOpen && <p>{item.name}</p>}
+                  </motion.div>
+                </Link>
+              );
+            })}
+          </div>
+          <div className={styles.footer}>
+            <hr className={styles.divider} />
+            {footerItems.map((item, index) => {
+              return (
+                <Link
+                  href={item.link}
+                  className={styles.link}
+                  onClick={() => {
+                    handleClickLink(index + mainItems.length + subItems.length);
+                    if (item.action) {
+                      item.action();
+                    }
+                  }}
+                  key={index + mainItems.length + subItems.length}
                 >
-                  {item.icon(true)}
-                </div>
-                {isMenuOpen && <p>{item.name}</p>}
-              </motion.div>
-            </Link>
-          );
-        })}
-      </div>
-    </motion.nav>
+                  <motion.div
+                    className={styles.menu}
+                    style={{
+                      paddingLeft: isMenuOpen ? 0 : 0,
+                      minWidth: isMenuOpen ? 190 : 70,
+                      color: item.color,
+                    }}
+                  >
+                    <div
+                      className={styles.icon}
+                      style={{ width: isMenuOpen ? 22 : 50 }}
+                    >
+                      {item.icon(true)}
+                    </div>
+                    {isMenuOpen && <p>{item.name}</p>}
+                  </motion.div>
+                </Link>
+              );
+            })}
+          </div>
+        </motion.nav>
+      )}
+    </AnimatePresence>
   );
 }

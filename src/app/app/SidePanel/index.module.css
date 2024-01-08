@@ -3,15 +3,15 @@
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  height: 98%;
+  height: 100%;
   background-color: var(--sidebar-background);
   overflow: hidden;
   width: 240px;
 
   border-radius: 0px 10px 10px 0px;
-  border: var(--sidebar-stroke);
+  border-radius: 0px;
+  /* border: var(--sidebar-stroke); */
   border-left: none;
-  /* box-shadow: 2px 2px 10px var(--primary-grey-1); */
 
   color: var(--sidebar-color);
   font-family: var(--font-family);
@@ -27,8 +27,8 @@
   height: 1px;
   margin-bottom: 15px;
   border: 0;
-  background-color: var(--primary-grey-1);
-  color: var(--primary-grey-1);
+  background-color: var(--sidebar-divider-color);
+  color: var(--sidebar-divider-color);
 }
 
 .dividerText {
@@ -151,7 +151,7 @@
   background-color: var(--basic-white);
   border-radius: 10px;
 
-  top: 30px;
+  top: 80px;
   left: 225px;
 
   width: 30px;

@@ -1,17 +1,18 @@
 .container {
-  position: fixed;
+  position: absolute;
   top: 0;
+  margin-top: 50px;
   right: 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - 50px);
   width: 50%;
   min-width: 400px;
   max-width: 800px;
   border-radius: 5px;
   background-color: var(--sidebar-background);
   border-left: var(--sidebar-stroke);
-  z-index: 2;
+  z-index: 4;
 }
 
 .tabs {

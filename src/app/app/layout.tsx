@@ -4,23 +4,20 @@ import { useCallback, useState } from "react";
 import SidePanel from "./SidePanel";
 import { ColorScheme, ColorSchemeDark } from "@/Designer";
 import { useAppSelector } from "@/lib/hooks";
+import Toolbar from "./ToolBar/Toolbar";
+import styles from "./layout.module.css";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
-
+  const isSidebarOpen = useAppSelector(
+    (state) => state.toolbarSlice.isSidebarOpen
+  );
   return (
-    <section
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        height: "100vh",
-        width: "100vw",
-        alignItems: "center",
-        backgroundColor: isDarkMode ? ColorSchemeDark.defaultBackground : ColorScheme.defaultBackground,
-      }}
-    >
-      <SidePanel />
-      {children}
+    <section className={styles.section}>
+      <Toolbar />
+      <div className={styles.main}>
+        <SidePanel />
+        {children}
+      </div>
     </section>
   );
 }

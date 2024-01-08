@@ -1,0 +1,1 @@
+export const defaultTransition = { type: 'tween', duration: 0.1 };
