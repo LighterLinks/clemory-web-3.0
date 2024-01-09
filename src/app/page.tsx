@@ -10,7 +10,7 @@ export default function Home() {
         Easy recall and retrieve all<br/>knowledge you once had <p>using AI</p>
       </h1>
       <Link className={styles.button1} href="/app">Build your own memory cell now</Link>
-      <p className={styles.text2}>30 Days free trial | No credit card required</p>
+      {/* <p className={styles.text2}>30 Days free trial | No credit card required</p> */}
       <Image className={styles.image1} src={image1} alt="image1" />
     </div>
   );

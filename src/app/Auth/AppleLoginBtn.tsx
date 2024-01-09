@@ -46,7 +46,7 @@ export default function AppleLoginButton() {
       {openModal && <div className={styles.popUpOverlay} />}
       <div className={styles.button} onClick={handleAppleLogin}>
         <div className={styles.buttonIcon}>
-          <AppleIcon size={30} />
+          <AppleIcon size={40} />
         </div>
         <div className={styles.buttonText}>
           <p>Sign in with Apple</p>

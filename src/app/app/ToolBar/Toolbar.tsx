@@ -26,6 +26,7 @@ import ControlIcon from "./Icons/Controllcon";
 import ShareIcon from "./Icons/ShareIcon";
 import TreemapIcon from "./Icons/TreemapIcon";
 import ShareModal from "./ShareModal/ShareModal";
+import { logEvent } from "@/app/API/API";
 
 export default function Toolbar() {
   const dispatch = useAppDispatch();
@@ -77,6 +78,7 @@ export default function Toolbar() {
 
   const handleGetStarted = useCallback(() => {
     window.open("https://clemory.io/clemory_view_login", "_blank");
+    logEvent("get_started_from_shared");
   }, []);
 
   return (

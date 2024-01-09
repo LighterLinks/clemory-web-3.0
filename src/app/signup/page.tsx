@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { loginStandAloneAccountIdExists, registerStandAlone } from "../API/API";
 import LocalStorage from "@/lib/localstroage";
+import signInpic from "../Assets/Image/signinPic.png";
+import Image from "next/image";
 
 const warningMessages = {
   empty: "Please fill in all fields",
@@ -65,13 +67,7 @@ export default function Page() {
   return (
     <div className={styles.container}>
       <motion.div className={styles.left}>
-        <p className={styles.titleLeft}>Welcome to Clemory!</p>
-        <p className={styles.subtitleLeft}>
-          The world’s finest information storage
-        </p>
-        <p className={styles.subtitleLeft}>
-          Already have an account? <Link href="/signin">Sign in!</Link>
-        </p>
+        <Image className={styles.image} src={signInpic} alt="signInpic" />
       </motion.div>
       <motion.div className={styles.right}>
         <p className={styles.title}>Sign up</p>
@@ -113,6 +109,9 @@ export default function Page() {
             Sign up
           </button>
         </form>
+        <p className={styles.subtitleLeft}>
+          Already have an account? <Link href="/signin">Sign in!</Link>
+        </p>
       </motion.div>
     </div>
   );

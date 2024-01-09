@@ -4,6 +4,12 @@
   width: 100vw;
   height: 100vh;
   font-family: var(--font-family);
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  object-fit: cover;
 }
 
 .warning {
@@ -31,6 +37,7 @@
   width: 50%;
   height: 100%;
   background-color: var(--basic-white);
+  padding: 120px 0px;
 }
 
 .titleLeft {
@@ -40,9 +47,9 @@
 }
 
 .subtitleLeft {
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-light);
-  color: var(--basic-white);
+  color: var(--basic-black);
 }
 
 .title {
@@ -52,9 +59,9 @@
 }
 
 .subtitle {
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-light);
-  color: var(--primary-gradient-1);
+  color: var(--basic-black);
 }
 
 .form {
@@ -71,20 +78,21 @@
   align-items: flex-start;
   width: 80%;
   height: 20px;
-  border-radius: 20px;
+  border-radius: 0.5rem;
   margin-bottom: 1rem;
+  background-color: #f6f6f6;
   outline: none;
-  border: 2px solid var(--placeholder-primary-2);
+  border: none;
   padding: 20px 20px;
   box-sizing: border-box;
 
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-regular);
-  color: var(--primary-gradient-1);
+  color: var(--basic-black);
 }
 .input:focus {
-  border: 2px solid var(--primary-gradient-1);
+  border: 0.4px solid var(--primary-color);
 }
 
 .button {
@@ -92,11 +100,11 @@
   justify-content: center;
   align-items: center;
   width: 80%;
-  height: 4rem;
-  border-radius: 2rem;
-  background-color: var(--primary-gradient-1);
+  height: 3rem;
+  border-radius: 0.5rem;
+  background-color: #d55f5a;
   color: var(--basic-white);
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-sm);
   font-family: var(--font-family);
   font-weight: var(--font-weight-light);
   outline: none;

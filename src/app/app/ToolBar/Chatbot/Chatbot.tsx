@@ -188,7 +188,7 @@ export default function Chatbot() {
               {chatHistory.length === 0 && (
                 <motion.div className={styles.BotChat}>
                   <motion.div className={styles.BotIcon}>
-                    <RobotIcon size={32} color={colorTheme.toolbarFontColor} />
+                    <RobotIcon size={20} color={colorTheme.toolbarFontColor} />
                   </motion.div>
                   <motion.div className={styles.chatUnitText}>
                     Hi, I&apos;m your assistant. Ask me anything about this
@@ -242,7 +242,10 @@ export default function Chatbot() {
                             )
                           }
                         >
-                          <LocateIcon size={16} color={"#FFFFFF"} />
+                          <LocateIcon
+                            size={16}
+                            color={colorTheme.toolbarFontColor}
+                          />
                         </motion.div>
                       )}
                       <motion.div
@@ -251,7 +254,10 @@ export default function Chatbot() {
                         whileHover={{ scale: 1.03, opacity: 1 }}
                         onClick={() => handleCopy(unit.text)}
                       >
-                        <CopyIcon />
+                        <CopyIcon
+                          size={16}
+                          color={colorTheme.toolbarFontColor}
+                        />
                       </motion.div>
                     </motion.div>
                   </motion.div>

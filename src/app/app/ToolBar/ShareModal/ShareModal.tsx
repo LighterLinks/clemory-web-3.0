@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import LocalStorage from "@/lib/localstroage";
 import { usePathname } from "next/navigation";
 import { use, useCallback, useEffect, useState } from "react";
-import { readPage } from "@/app/API/API";
+import { logEvent, readPage } from "@/app/API/API";
 import LinkIcon from "../Icons/LinkIcon";
 import { ColorScheme, ColorSchemeDark } from "@/Designer";
 import { defaultTransition } from "@/Designer/animation";
@@ -33,6 +33,7 @@ export default function ShareModal() {
       `https://clemory.io/app/shared/${viewPageId}`
     );
     setIsCopied(true);
+    logEvent('copy_link');
   }, [viewPageId]);
 
   const goToLink = useCallback(() => {

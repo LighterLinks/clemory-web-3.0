@@ -41,7 +41,7 @@ export default function GoogleLoginButton() {
             { openModal && <div className={styles.popUpOverlay} />}
             <div className={styles.button} onClick={handleGoogleLogin}>
                 <div className={styles.buttonIcon}>
-                    <GoogleIcon size={30} />
+                    <GoogleIcon size={40} />
                 </div>
                 <div className={styles.buttonText}>
                     <p>Sign in with Google</p>

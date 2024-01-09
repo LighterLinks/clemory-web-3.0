@@ -653,14 +653,41 @@ export async function viewGetAllNodes(viewPageId: string) {
   return data;
 }
 
-export async function chatInPage(userId: string, pageId: string, queryText: string) {
+export async function chatInPage(
+  userId: string,
+  pageId: string,
+  queryText: string
+) {
   const options = {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userId: userId, pageId: pageId, queryText: queryText }),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: userId,
+      pageId: pageId,
+      queryText: queryText,
+    }),
   };
-  const reponse = await fetch('https://clemory.io/apiStream/chatInPage', options);
+  const reponse = await fetch(
+    "https://clemory.io/apiStream/chatInPage",
+    options
+  );
   return reponse;
+}
+
+export async function logEvent(category: string) {
+  const apiURL = baseURL + "/logEvent";
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ category: category }),
+  };
+
+  const response = await fetch(apiURL, options);
+  const data = await response.json();
+
+  return data;
 }

@@ -8,6 +8,8 @@ import GoogleLoginButton from "../Auth/GoogleLoginBtn";
 import AppleLoginButton from "../Auth/AppleLoginBtn";
 import { loginStandAlone, loginStandAloneAccountIdExists } from "../API/API";
 import LocalStorage from "@/lib/localstroage";
+import signInpic from "../Assets/Image/signinPic.png";
+import Image from "next/image";
 
 const warningMessages = {
   empty: "Please fill in all fields",
@@ -51,22 +53,14 @@ export default function Page() {
   return (
     <div className={styles.container}>
       <motion.div className={styles.left}>
-        <p className={styles.titleLeft}>Welcome to Clemory!</p>
-        <p className={styles.subtitleLeft}>
-          The world&apos;s finest information storage
-        </p>
-        <p className={styles.subtitleLeft}>
-          Don&apos;t have an account? <Link href="/signup">Join us now!</Link>
-        </p>
+        <Image className={styles.image} src={signInpic} alt="signInpic" />
       </motion.div>
       <motion.div className={styles.right}>
         <p className={styles.title}>Sign in</p>
-        <p className={styles.subtitle}>Please sign in to continue</p>
+        <p className={styles.subtitle}>
+          Sign in to create and share your own canvas
+        </p>
         <p className={styles.warning}>{warning}</p>
-        <div className={styles.snsLogin}>
-          <GoogleLoginButton />
-          <AppleLoginButton />
-        </div>
         <form
           className={styles.form}
           onKeyDown={(event) => {
@@ -91,6 +85,18 @@ export default function Page() {
             Sign in
           </button>
         </form>
+        <p className={styles.subtitleLeft}>
+          Don&apos;t have an account? <Link href="/signup">Join us now!</Link>
+        </p>
+        <div className={styles.divider}>
+          <hr className={styles.dividerLine} />
+          <div className={styles.or}>Sign in with</div>
+          <hr className={styles.dividerLine} />
+        </div>
+        <div className={styles.snsLogin}>
+          <GoogleLoginButton />
+          <AppleLoginButton />
+        </div>
       </motion.div>
     </div>
   );
