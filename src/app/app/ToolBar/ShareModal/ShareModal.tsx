@@ -9,6 +9,7 @@ import { use, useCallback, useEffect, useState } from "react";
 import { readPage } from "@/app/API/API";
 import LinkIcon from "../Icons/LinkIcon";
 import { ColorScheme, ColorSchemeDark } from "@/Designer";
+import { defaultTransition } from "@/Designer/animation";
 
 export default function ShareModal() {
   const userId = LocalStorage.getItem("userId") as string;
@@ -53,7 +54,14 @@ export default function ShareModal() {
   return (
     <AnimatePresence>
       {isShareModalOpen && (
-        <motion.div className={styles.container} id="share-modal">
+        <motion.div
+          className={styles.container}
+          id="share-modal"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={defaultTransition}
+        >
           <div className={styles.title}>
             <p>Share</p>
           </div>
