@@ -13,8 +13,10 @@
     "@blocknote/react": "^0.10.1",
     "@reduxjs/toolkit": "^2.0.1",
     "@tanstack/react-query": "^5.17.1",
+    "dotenv": "^16.3.1",
     "firebase": "^10.7.1",
     "framer-motion": "^10.16.16",
+    "mixpanel-browser": "^2.48.1",
     "next": "13.5.5",
     "next-redux-wrapper": "^8.1.0",
     "react": "^18",
@@ -29,6 +31,7 @@
     "reactflow": "^11.10.1"
   },
   "devDependencies": {
+    "@types/mixpanel-browser": "^2.48.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

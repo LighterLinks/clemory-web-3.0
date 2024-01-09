@@ -8,6 +8,8 @@ import { loginStandAloneAccountIdExists, registerStandAlone } from "../API/API";
 import LocalStorage from "@/lib/localstroage";
 import signInpic from "../Assets/Image/signinPic.png";
 import Image from "next/image";
+import mixpanel from "mixpanel-browser";
+import { generateMixpanelEvent, mixpanelEventName } from "@/lib/mixpanelAction";
 
 const warningMessages = {
   empty: "Please fill in all fields",
@@ -57,9 +59,14 @@ export default function Page() {
       if (res.resCode.responseCode === 200) {
         setWarning("");
         LocalStorage.setItem("token", res.token);
-        // localStorage.setItem("isAuth", "true");
-        // localStorage.setItem("userId", res.userInfo.userId);
+        localStorage.setItem("isAuth", "true");
+        localStorage.setItem("userId", res.userInfo.userId);
         window.location.href = "/app";
+        generateMixpanelEvent(res.userInfo.userId, mixpanelEventName.CREATE_USER, {
+          "User ID": res.userInfo.userId,
+          "User Name": res.userInfo.displayName,
+          "User Email": res.userInfo.email,
+        });
       }
     });
   }, []);

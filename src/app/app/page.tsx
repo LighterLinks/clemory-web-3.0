@@ -28,6 +28,7 @@ import { ColorScheme, ColorSchemeDark } from "@/Designer";
 import { updateIsDarkMode } from "@/lib/features/global/settingSlice";
 import ChevronDown from "./Assets/Icons/ChevronDown";
 import LocalStorage from "@/lib/localstroage";
+import { generateMixpanelEvent, mixpanelEventName } from "@/lib/mixpanelAction";
 
 export default function Page() {
   const userId = LocalStorage.getItem("userId");
@@ -123,6 +124,12 @@ export default function Page() {
       return;
     }
     window.location.href = "/app/canvas/" + pageId;
+    generateMixpanelEvent(userId, mixpanelEventName.VIEW_PAGE, {
+      "Page ID": pageId,
+      "Page Name":
+        pageNameRefs.current[pages.findIndex((page) => page.pageId === pageId)]
+          .value,
+    });
   }, []);
 
   const parseCreateTime = useCallback((createTime: string) => {
