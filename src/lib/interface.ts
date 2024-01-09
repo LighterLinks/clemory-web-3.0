@@ -1,5 +1,6 @@
 export interface IPage {
     pageId: string;
+    viewPageId: string;
     pageOrder: number;
     pageName: string;
     createTime: string;

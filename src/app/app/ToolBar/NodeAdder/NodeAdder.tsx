@@ -9,6 +9,7 @@ import ImageIcon from "../../Assets/Nodes/Assets/ImageIcon";
 import AudioIcon from "../../Assets/Nodes/Assets/AudioIcon";
 import TextIcon from "../../Assets/Nodes/Assets/TextIcon";
 import { NODETYPE } from "@/lib/interface";
+import { motion } from "framer-motion";
 
 export default function NodeAdder() {
   const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
@@ -42,10 +43,7 @@ export default function NodeAdder() {
     // },
   ];
 
-  const handleOnDragStart = (
-    event: React.DragEvent<HTMLDivElement>,
-    nodeType: string
-  ) => {
+  const handleOnDragStart = (event: any, nodeType: string) => {
     event.dataTransfer.setData("application/reactflow", nodeType);
     event.dataTransfer.effectAllowed = "move";
   };
@@ -53,15 +51,22 @@ export default function NodeAdder() {
   return (
     <div className={styles.container}>
       {dndNodes.map((node, index) => (
-        <div
+        <motion.div
           key={index}
           className={styles.dndNode}
           onDragStart={(event) => handleOnDragStart(event, node.type)}
+          whileHover={{
+            y: 5,
+            backgroundColor: colorTheme.toolbarBackground2,
+            boxShadow: isDarkMode
+              ? "0px 0px 5px 0px rgba(255,255,255,0.75)"
+              : "0px 0px 5px 0px rgba(0,0,0,0.75)",
+          }}
           draggable
         >
           {node.icon}
           {node.text}
-        </div>
+        </motion.div>
       ))}
     </div>
   );
