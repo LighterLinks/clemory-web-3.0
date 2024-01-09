@@ -10,6 +10,7 @@ import {
   updateIsChatbotOpen,
   updateIsControlsOpen,
   updateIsNodeAdderOpen,
+  updateIsShareModalOpen,
   updateIsSidebarOpen,
 } from "@/lib/features/toolbar/toolbarSlice";
 import MinimapIcon from "./Icons/MinimapIcon";
@@ -22,6 +23,9 @@ import EditIcon from "../Assets/Nodes/Assets/EditIcon";
 import { updateIsEditorPanelOpen } from "@/lib/features/editor/editorSlice";
 import Chatbot from "./Chatbot/Chatbot";
 import ControlIcon from "./Icons/Controllcon";
+import ShareIcon from "./Icons/ShareIcon";
+import TreemapIcon from "./Icons/TreemapIcon";
+import ShareModal from "./ShareModal/ShareModal";
 
 export default function Toolbar() {
   const dispatch = useAppDispatch();
@@ -41,6 +45,9 @@ export default function Toolbar() {
   );
   const isEditorPanelOpen = useAppSelector(
     (state) => state.editorSlice.isEditorPanelOpen
+  );
+  const isShareModalOpen = useAppSelector(
+    (state) => state.toolbarSlice.isShareModalOpen
   );
   const colorTheme = isDarkMode ? ColorSchemeDark : ColorScheme;
 
@@ -64,6 +71,10 @@ export default function Toolbar() {
     dispatch(updateIsEditorPanelOpen(!isEditorPanelOpen));
   }, [isEditorPanelOpen]);
 
+  const toggleShareModal = useCallback(() => {
+    dispatch(updateIsShareModalOpen(!isShareModalOpen));
+  }, [isShareModalOpen]);
+
   const handleGetStarted = useCallback(() => {
     window.open("https://clemory.io/clemory_view_login", "_blank");
   }, []);
@@ -76,7 +87,10 @@ export default function Toolbar() {
           display: pathName === "shared" ? "flex" : "none",
         }}
       >
-        <p>This is readonly version of Clemory app. Make your own information storage in Clemory!</p>
+        <p>
+          This is readonly version of Clemory app. Make your own information
+          storage in Clemory!
+        </p>
         <motion.div
           className={styles.textButton}
           style={{
@@ -120,6 +134,7 @@ export default function Toolbar() {
           <p>Menu</p>
           <MenuIcon size={20} color={colorTheme.toolbarFontColor} />
         </div>
+        <div className={styles.textButtonVoid}></div>
       </div>
       <div
         className={styles.wrapper}
@@ -145,6 +160,21 @@ export default function Toolbar() {
             <TriangleUpIcon size={18} color={colorTheme.toolbarFontColor} />
           )}
         </div>
+        <div
+          className={styles.textButton}
+          style={{
+            backgroundColor: isChatbotOpen
+              ? colorTheme.toolbarBackground2
+              : colorTheme.toolbarBackground,
+          }}
+          onClick={toggleChatbot}
+        >
+          <p>Chatbot</p>
+          <ChatIcon size={20} color={colorTheme.toolbarFontColor} />
+        </div>
+        <div className={styles.chatModal}>
+          <Chatbot />
+        </div>
         {isNodeAdderOpen && (
           <div className={styles.nodeAdder}>
             <NodeAdder />
@@ -160,26 +190,14 @@ export default function Toolbar() {
         <div
           className={styles.textButton}
           style={{
-            backgroundColor: isChatbotOpen
-              ? colorTheme.toolbarBackground2
-              : colorTheme.toolbarBackground,
-          }}
-          onClick={toggleChatbot}
-        >
-          <p>Chatbot</p>
-          <ChatIcon size={20} color={colorTheme.toolbarFontColor} />
-        </div>
-        <div
-          className={styles.textButton}
-          style={{
             backgroundColor: isControlsOpen
               ? colorTheme.toolbarBackground2
               : colorTheme.toolbarBackground,
           }}
           onClick={toggleControls}
         >
-          <p>Controls</p>
-          <ControlIcon size={20} color={colorTheme.toolbarFontColor} />
+          <p>Minimap</p>
+          <TreemapIcon size={20} color={colorTheme.toolbarFontColor} />
         </div>
         <div
           className={styles.textButton}
@@ -193,8 +211,20 @@ export default function Toolbar() {
           <p>Editor</p>
           <EditIcon size={20} color={colorTheme.toolbarFontColor} />
         </div>
-        <div className={styles.chatModal}>
-          <Chatbot />
+        <div
+          className={styles.textButton}
+          style={{
+            backgroundColor: isShareModalOpen
+              ? colorTheme.toolbarBackground2
+              : colorTheme.toolbarBackground,
+          }}
+          onClick={toggleShareModal}
+        >
+          <p>Share</p>
+          <ShareIcon size={20} color={colorTheme.toolbarFontColor} />
+        </div>
+        <div className={styles.shareModal}>
+          <ShareModal />
         </div>
       </div>
     </motion.div>

@@ -56,7 +56,7 @@ export default function SidePanel() {
       icon: (flag: boolean) => {
         return (
           <HomeIcon
-            size={30}
+            size={SidebarLayout.logoSize}
             color={
               flag
                 ? colorTheme.sideBarFontColor
@@ -72,7 +72,7 @@ export default function SidePanel() {
       icon: (flag: boolean) => {
         return (
           <CommunityIcon
-            size={30}
+            size={SidebarLayout.logoSize}
             color={
               flag
                 ? colorTheme.sideBarFontColor
@@ -115,7 +115,7 @@ export default function SidePanel() {
       icon: (flag: boolean) => {
         return (
           <UserLogo
-            size={30}
+            size={SidebarLayout.logoSize}
             color={
               flag
                 ? colorTheme.sideBarFontColor
@@ -131,7 +131,7 @@ export default function SidePanel() {
       icon: (flag: boolean) => {
         return (
           <SettingLogo
-            size={30}
+            size={SidebarLayout.logoSize}
             color={
               flag
                 ? colorTheme.sideBarFontColor
@@ -150,7 +150,7 @@ export default function SidePanel() {
       icon: (flag: boolean) => {
         return (
           <HelpIcon
-            size={30}
+            size={SidebarLayout.logoSize}
             color={flag ? colorTheme.sideBarFontColor : colorTheme.basicWhite}
           />
         );
@@ -163,7 +163,7 @@ export default function SidePanel() {
       icon: (flag: boolean) => {
         return (
           <LogoutIcon
-            size={30}
+            size={SidebarLayout.logoSize}
             color={flag ? colorTheme.warningRed : colorTheme.primaryGrey2}
           />
         );

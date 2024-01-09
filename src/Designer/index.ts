@@ -1,5 +1,6 @@
 export const SidebarLayout = {
   width: 240,
+  logoSize: 20,
 };
 
 export const ColorScheme = {

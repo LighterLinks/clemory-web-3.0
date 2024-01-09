@@ -1,7 +1,7 @@
 .container {
   display: flex;
   position: absolute;
-  right: 0px;
+  right: -220px;
   width: 320px;
   height: 50vh;
   background-color: var(--toolbar-background-2);

@@ -58,6 +58,25 @@
   cursor: pointer;
 }
 
+.textButtonVoid {
+  display: flex;
+  width: 5%;
+  /* flex-direction: row; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--toolbar-background);
+  position: relative;
+  height: 30px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 300;
+  gap: 5px;
+  user-select: none;
+  cursor: pointer;
+}
+
 .nodeAdder {
   display: flex;
   position: absolute;
@@ -71,7 +90,14 @@
   right: 0px;
 }
 
-@media screen and (max-width: 600px) {
+.shareModal {
+  display: flex;
+  position: absolute;
+  top: 50px;
+  right: 0px;
+}
+
+@media screen and (max-width: 650px) {
   .textButton p {
     display: none;
   }

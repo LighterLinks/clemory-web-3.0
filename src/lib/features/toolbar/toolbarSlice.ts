@@ -5,6 +5,7 @@ export interface IToolbarState {
   isControlsOpen: boolean;
   isNodeAdderOpen: boolean;
   isChatbotOpen: boolean;
+  isShareModalOpen?: boolean;
 }
 
 const initialState: IToolbarState = {
@@ -12,6 +13,7 @@ const initialState: IToolbarState = {
   isControlsOpen: false,
   isNodeAdderOpen: false,
   isChatbotOpen: false,
+  isShareModalOpen: false,
 };
 
 export const toolbarSlice = createSlice({
@@ -30,6 +32,9 @@ export const toolbarSlice = createSlice({
     updateIsChatbotOpen: (state, action: PayloadAction<boolean>) => {
       state.isChatbotOpen = action.payload;
     },
+    updateIsShareModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isShareModalOpen = action.payload;
+    },
   },
 });
 
@@ -38,6 +43,7 @@ export const {
   updateIsControlsOpen,
   updateIsNodeAdderOpen,
   updateIsChatbotOpen,
+  updateIsShareModalOpen,
 } = toolbarSlice.actions;
 
 export default toolbarSlice.reducer;
