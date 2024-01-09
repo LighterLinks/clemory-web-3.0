@@ -43,7 +43,7 @@
 .textButton {
   display: flex;
   /* flex-direction: row; */
-  flex-direction: row-reverse;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   background-color: var(--toolbar-background);

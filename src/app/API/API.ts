@@ -637,6 +637,22 @@ export async function updateNodePosition(
   return data;
 }
 
+export async function viewGetAllNodes(viewPageId: string) {
+  const apiURL = baseURL + "/viewGetAllNodes";
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ viewPageId: viewPageId }),
+  };
+
+  const response = await fetch(apiURL, options);
+  const data = await response.json();
+
+  return data;
+}
+
 export async function chatInPage(userId: string, pageId: string, queryText: string) {
   const options = {
       method: 'POST',

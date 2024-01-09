@@ -8,9 +8,9 @@ export interface IToolbarState {
 }
 
 const initialState: IToolbarState = {
-  isSidebarOpen: true,
+  isSidebarOpen: false,
   isControlsOpen: false,
-  isNodeAdderOpen: true,
+  isNodeAdderOpen: false,
   isChatbotOpen: false,
 };
 

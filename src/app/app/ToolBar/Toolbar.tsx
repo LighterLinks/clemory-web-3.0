@@ -64,9 +64,50 @@ export default function Toolbar() {
     dispatch(updateIsEditorPanelOpen(!isEditorPanelOpen));
   }, [isEditorPanelOpen]);
 
+  const handleGetStarted = useCallback(() => {
+    window.open("https://clemory.io/clemory_view_login", "_blank");
+  }, []);
+
   return (
     <motion.div id="toolbar" className={styles.toolbar}>
-      <div className={styles.wrapper}>
+      <div
+        className={styles.wrapper}
+        style={{
+          display: pathName === "shared" ? "flex" : "none",
+        }}
+      >
+        <p>This is readonly version of Clemory app. Make your own information storage in Clemory!</p>
+        <motion.div
+          className={styles.textButton}
+          style={{
+            backgroundColor: isSidebarOpen
+              ? colorTheme.toolbarBackground2
+              : colorTheme.toolbarBackground,
+            fontSize: 16,
+            fontWeight: 300,
+            marginLeft: 20,
+            padding: "10px 10px",
+            border: "1px solid #000",
+            borderRadius: 5,
+          }}
+          onClick={handleGetStarted}
+          whileHover={{
+            scale: 1.04,
+            backgroundColor: colorTheme.toolbarBackground2,
+          }}
+          whileTap={{
+            scale: 0.9,
+          }}
+        >
+          <p>Start now</p>
+        </motion.div>
+      </div>
+      <div
+        className={styles.wrapper}
+        style={{
+          display: pathName === "shared" ? "none" : "flex",
+        }}
+      >
         <div
           className={styles.textButton}
           style={{
@@ -96,7 +137,7 @@ export default function Toolbar() {
           onClick={toggleNodeAdder}
         >
           <p>Create node</p>
-          {isNodeAdderOpen ? (
+          {!isNodeAdderOpen ? (
             <>
               <TriangleDownIcon size={18} color={colorTheme.toolbarFontColor} />
             </>
