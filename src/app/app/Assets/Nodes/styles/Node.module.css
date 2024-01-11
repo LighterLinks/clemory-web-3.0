@@ -75,6 +75,7 @@
   width: 12px;
   height: 12px;
   border-radius: 10%;
+  border: none;
   background-color: var(--toolbar-background);
   cursor: pointer;
 }

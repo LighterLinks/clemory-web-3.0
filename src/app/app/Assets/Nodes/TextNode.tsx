@@ -4,7 +4,7 @@ import { Handle, NodeProps, Position, useReactFlow } from "reactflow";
 import { INode } from "@/lib/interface";
 import { motion } from "framer-motion";
 import styles from "./styles/Node.module.css";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import CheckCircleIcon from "./Assets/CheckCircleIcon";
 import EditIcon from "./Assets/EditIcon";
 import { useAppSelector } from "@/lib/hooks";
@@ -76,9 +76,11 @@ export default function TextNode(props: NodeProps<INode>) {
     setIsHovered(false);
   }, []);
 
-  const handleSave = useCallback(() => {
+  const handleSave = useCallback((event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsEditing(false);
-    console.log(textRef.current?.value);
+    const formData = new FormData(event.currentTarget);
+    const textData = formData.get("text") as string;
     updateNode(userId, props.data.nodeId, pageId, {
       ...props.data,
       content: [
@@ -86,17 +88,16 @@ export default function TextNode(props: NodeProps<INode>) {
           type: "paragraph",
           content: [
             {
-              text: textRef.current?.value,
               ...props.data.content[0].content[0],
+              text: textData,
             },
           ],
         },
       ],
     }).then((res) => {
-      console.log(res);
       successToast();
     });
-  }, [textRef.current?.value]);
+  }, []);
 
   const handleCancel = useCallback(() => {
     setIsEditing(false);
@@ -132,9 +133,6 @@ export default function TextNode(props: NodeProps<INode>) {
         )
       ) : (
         <>
-          <div className={styles.textButton} onClick={handleSave}>
-            <CheckIcon size={8} color={colorTheme.toolbarFontColor} />
-          </div>
           <div className={styles.cancelButton} onClick={handleCancel}>
             <CrossIcon size={8} color={colorTheme.toolbarFontColor} />
           </div>
@@ -143,12 +141,19 @@ export default function TextNode(props: NodeProps<INode>) {
           </div>
         </>
       )}
-      <div className={styles.textInputWrapper}>
+      <form className={styles.textInputWrapper}
+        onSubmit={handleSave}
+      >{isEditing && (
+        <button className={styles.textButton}>
+          <CheckIcon size={8} color={colorTheme.toolbarFontColor} />
+        </button>)}
         <input
           className={styles.textInput}
           ref={textRef}
           type="text"
+          name="text"
           readOnly={!isEditing}
+          autoComplete="off"
           onChange={handleOnInputChange}
           style={{
             userSelect: isEditing ? "auto" : "none",
@@ -157,7 +162,7 @@ export default function TextNode(props: NodeProps<INode>) {
           }}
           defaultValue={props.data.content[0].content[0].text}
         />
-      </div>
+      </form>
     </motion.div>
   );
 }
