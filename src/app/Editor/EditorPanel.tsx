@@ -12,6 +12,7 @@ import {
   closeEditor,
   openEditor,
   updateCurrentEditor,
+  updateIsEditorPanelFullsized,
   updateIsEditorPanelOpen,
 } from "@/lib/features/editor/editorSlice";
 import { ColorScheme, ColorSchemeDark } from "@/Designer";
@@ -21,6 +22,8 @@ import Editor from "./Editor";
 import DoubleChevron from "./Assets/DoubleChevron";
 import EmptyDocIcon from "./Assets/EmptyDocIcon";
 import { defaultTransition } from "@/Designer/animation";
+import CollapseIcon from "./Assets/CollapseIcon";
+import ExpandIcon from "./Assets/ExpandIcon";
 
 export default function EditorPanel({
   pageId,
@@ -38,6 +41,12 @@ export default function EditorPanel({
   );
   const isEditorPanelOpen = useAppSelector(
     (state) => state.editorSlice.isEditorPanelOpen
+  );
+  const isEditorPanelFullsized = useAppSelector(
+    (state) => state.editorSlice.isEditorPanelFullsized
+  );
+  const isSidebarOpen = useAppSelector(
+    (state) => state.toolbarSlice.isSidebarOpen
   );
   const currentNodes = useAppSelector((state) => state.nodeSlice.nodes);
   const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
@@ -64,7 +73,7 @@ export default function EditorPanel({
       });
       dispatch(updateCurrentEditor(firstTab));
     }
-  }, [openedEditors]);
+  }, [openedEditors, currentNodes]);
 
   const getNodeTitle = useCallback(
     (nodeId: string) => {
@@ -76,18 +85,23 @@ export default function EditorPanel({
     [currentNodes]
   );
 
-  const handleCloseTab = useCallback((nodeId: string) => {
-    dispatch(closeEditor(nodeId));
-    setEditorIndex(-1);
-  }, []);
 
   const handleClickTab = useCallback((nodeId: string) => {
     dispatch(updateCurrentEditor(nodeId));
   }, []);
 
+  const handleCloseTab = useCallback((nodeId: string) => {
+    dispatch(closeEditor(nodeId));
+    gotoFirstTab();
+  }, []);
+
   const handleClosePanel = useCallback(() => {
     dispatch(updateIsEditorPanelOpen(false));
   }, []);
+
+  const handleExpandPanel = useCallback(() => {
+    dispatch(updateIsEditorPanelFullsized(!isEditorPanelFullsized));
+  }, [isEditorPanelFullsized]);
 
   return (
     <AnimatePresence>
@@ -96,12 +110,24 @@ export default function EditorPanel({
           className={styles.container}
           key="editor-panel"
           initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
+          animate={{
+            opacity: 1,
+            x: 0,
+            width: isEditorPanelFullsized ? `calc(100% - ${isSidebarOpen ? '240px' : '0px'})` : "50%",
+            maxWidth: isEditorPanelFullsized ? "none" : "800px",
+            minWidth: isEditorPanelFullsized ? "none" : "400px",
+          }}
           exit={{ opacity: 0, x: 100 }}
           transition={defaultTransition}
         >
-          <button className={styles.closeBtn} onClick={handleClosePanel}>
+          <button className={styles.closeBtn} onClick={handleClosePanel} title="Close">
             <DoubleChevron size={20} color={colorTheme.primaryGrey4} />
+          </button>
+          <button className={styles.expandBtn} onClick={handleExpandPanel} title={`${isEditorPanelFullsized ? 'Reduce' : 'Expand'}`}>
+            {isEditorPanelFullsized ?
+              <CollapseIcon size={20} color={colorTheme.primaryGrey4} /> :
+              <ExpandIcon size={20} color={colorTheme.primaryGrey4} />
+            }
           </button>
           <motion.div className={styles.tabs}>
             {openedEditors.map((nodeId: string) => (
@@ -117,6 +143,7 @@ export default function EditorPanel({
                     currentEditor === nodeId
                       ? "none"
                       : `1px solid ${colorTheme.sideBarStrokeColor}`,
+                  opacity: currentEditor === nodeId ? 1 : 0.5,
                 }}
               >
                 <motion.div className={styles.tabTitle}>
@@ -139,6 +166,11 @@ export default function EditorPanel({
             ) : (
               <Editor nodeInfo={currentNodes[editorIndex]} />
             )} */}
+            {openedEditors.length === 0 &&
+              <div className={styles.emptyEditor}>
+                <EmptyDocIcon size={200} color={colorTheme.primaryGrey4} />
+              </div>
+            }
             {openedEditors.map((nodeId: string) => (
               <div
                 key={nodeId}

@@ -1,4 +1,4 @@
-import { IoMenu } from "react-icons/io5";
+import { IoIosMenu } from "react-icons/io";
 
 export default function MenuIcon({
   size,
@@ -7,5 +7,5 @@ export default function MenuIcon({
   size: number;
   color: string;
 }) {
-  return <IoMenu size={size} color={color} />;
+  return <IoIosMenu size={size} color={color} />;
 }

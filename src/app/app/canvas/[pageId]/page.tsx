@@ -56,6 +56,7 @@ import { onAdding } from "../../Assets/Toasts/toasts";
 import { stopLocate } from "@/lib/features/canvas/chatSlice";
 import WebNodePH from "../../Assets/Nodes/PlaceHolders/WebNodePH";
 import ImageNodePH from "../../Assets/Nodes/PlaceHolders/ImageNodePH";
+import { openEditor } from "@/lib/features/editor/editorSlice";
 
 function FlowView() {
   const pageId = usePathname().split("/")[3];
@@ -67,6 +68,7 @@ function FlowView() {
   const currentNodes = useAppSelector((state) => state.nodeSlice.nodes);
   const needLocate = useAppSelector((state) => state.chatSlice.needLocate);
   const locateToPos = useAppSelector((state) => state.chatSlice.postion);
+  const isEditorOpen = useAppSelector((state) => state.editorSlice.isEditorPanelOpen);
   const colorTheme = isDarkMode ? ColorSchemeDark : ColorScheme;
   const dispatch = useAppDispatch();
   const queryClient = getQueryClient();
@@ -139,13 +141,13 @@ function FlowView() {
 
   const initialNodes = data
     ? data.nodeInfo.map((node: INode) => {
-        return {
-          id: node.nodeId,
-          type: node.type,
-          data: node,
-          position: { x: node.x, y: node.y },
-        };
-      })
+      return {
+        id: node.nodeId,
+        type: node.type,
+        data: node,
+        position: { x: node.x, y: node.y },
+      };
+    })
     : [];
 
   const updateCurrentNodes = useCallback(() => {
@@ -262,13 +264,18 @@ function FlowView() {
 
   const handleOnNodeDoubleClick = useCallback(
     (event: React.MouseEvent, node: Node) => {
-      fitView({
-        padding: 1,
-        duration: 0.5,
-        nodes: [{ id: node.id }],
-      });
+      if (isEditorOpen) {
+        dispatch(openEditor(node.data.nodeId));
+      }
+      else {
+        fitView({
+          padding: 1,
+          duration: 0.5,
+          nodes: [{ id: node.id }],
+        });
+      }
     },
-    [reactFlowInstance]
+    [reactFlowInstance, isEditorOpen]
   );
 
   useEffect(() => {
@@ -289,7 +296,7 @@ function FlowView() {
     return () => {
       document
         .getElementById("mainFlow")
-        ?.removeEventListener("mousemove", () => {});
+        ?.removeEventListener("mousemove", () => { });
     };
   }, []);
 
@@ -315,18 +322,18 @@ function FlowView() {
     let genData = {};
     const urlRegex = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
       "i"
     ); // fragment locator
     const imgRegex = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,})" + // domain name
-        "(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\.(png|jpe?g|gif|svg))$",
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,})" + // domain name
+      "(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\.(png|jpe?g|gif|svg))$",
       "i"
     ); // image format
 
@@ -433,17 +440,17 @@ function FlowView() {
         bgColorIdx: 0,
         content: [NODETYPE.NOTE, NODETYPE.TEXT].includes(nodeType)
           ? data.text.map((t: string, index: number) => {
-              return {
-                type: "paragraph",
-                content: [
-                  {
-                    type: "text",
-                    text: t,
-                    styles: {},
-                  },
-                ],
-              };
-            })
+            return {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: t,
+                  styles: {},
+                },
+              ],
+            };
+          })
           : [],
         url: nodeType === NODETYPE.WEB ? data.url : "",
         imageUrl: nodeType === NODETYPE.IMAGE ? data.imgUrl : "",

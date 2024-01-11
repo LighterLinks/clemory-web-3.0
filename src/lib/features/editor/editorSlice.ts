@@ -3,12 +3,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IEditorSlice {
   isEditorPanelOpen: boolean;
+  isEditorPanelFullsized: boolean;
   openedEditors: string[];
   currentEditor?: string;
 }
 
 const initialState: IEditorSlice = {
   isEditorPanelOpen: false,
+  isEditorPanelFullsized: false,
   openedEditors: [],
   currentEditor: undefined,
 };
@@ -20,6 +22,9 @@ export const editorSlice = createSlice({
     updateIsEditorPanelOpen: (state, action: PayloadAction<boolean>) => {
       state.isEditorPanelOpen = action.payload;
     },
+    updateIsEditorPanelFullsized: (state, action: PayloadAction<boolean>) => {
+      state.isEditorPanelFullsized = action.payload;
+    },
     openEditor: (state, action: PayloadAction<string>) => {
       if (state.openedEditors.includes(action.payload)) {
         state.currentEditor = action.payload;
@@ -29,12 +34,16 @@ export const editorSlice = createSlice({
       }
     },
     closeEditor: (state, action: PayloadAction<string>) => {
-      state.openedEditors = state.openedEditors.filter(
+      const newEditors = state.openedEditors.filter(
         (editor) => editor !== action.payload
       );
-      if (state.openedEditors.length === 0) {
+      state.openedEditors = newEditors;
+      if (newEditors.length === 0) {
         state.currentEditor = undefined;
-      } else state.currentEditor = state.openedEditors[0];
+      }
+      else {
+        state.currentEditor = newEditors[0];
+      }
     },
     updateCurrentEditor: (state, action: PayloadAction<string>) => {
       state.currentEditor = action.payload;
@@ -44,6 +53,7 @@ export const editorSlice = createSlice({
 
 export const {
   updateIsEditorPanelOpen,
+  updateIsEditorPanelFullsized,
   openEditor,
   closeEditor,
   updateCurrentEditor,

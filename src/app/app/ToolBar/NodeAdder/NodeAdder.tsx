@@ -49,25 +49,23 @@ export default function NodeAdder() {
   };
 
   return (
-    <div className={styles.container}>
-      {dndNodes.map((node, index) => (
-        <motion.div
-          key={index}
-          className={styles.dndNode}
-          onDragStart={(event) => handleOnDragStart(event, node.type)}
-          whileHover={{
-            y: 5,
-            backgroundColor: colorTheme.toolbarBackground2,
-            // boxShadow: isDarkMode
-            //   ? "0px 0px 5px 0px rgba(255,255,255,0.75)"
-            //   : "0px 0px 5px 0px rgba(0,0,0,0.75)",
-          }}
-          draggable
-        >
-          {node.icon}
-          {node.text}
-        </motion.div>
-      ))}
-    </div>
+      <div className={styles.container}>
+        {dndNodes.map((node, index) => (
+          <motion.div
+            key={index}
+            className={styles.dndNode}
+            onDragStart={(event) => handleOnDragStart(event, node.type)}
+            whileHover={{
+              y: 3,
+              backgroundColor: colorTheme.toolbarBackground2,
+              scale: 1.04,
+            }}
+            draggable
+          >
+            {node.icon}
+            {node.text}
+          </motion.div>
+        ))}
+      </div>
   );
 }

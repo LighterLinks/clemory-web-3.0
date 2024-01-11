@@ -1,4 +1,5 @@
 import { HiOutlineDocument } from "react-icons/hi";
+import { IoDocumentOutline } from "react-icons/io5";
 
 export default function EmptyDocIcon({
   size,
@@ -7,5 +8,5 @@ export default function EmptyDocIcon({
   size: number;
   color: string;
 }) {
-  return <HiOutlineDocument size={size} color={color} />;
+  return <IoDocumentOutline size={size} color={color} />;
 }

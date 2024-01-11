@@ -199,7 +199,8 @@ export default function Toolbar() {
           onClick={toggleControls}
         >
           <p>Minimap</p>
-          <TreemapIcon size={20} color={colorTheme.toolbarFontColor} />
+          {/* <TreemapIcon size={20} color={colorTheme.toolbarFontColor} /> */}
+          <MinimapIcon size={20} color={colorTheme.toolbarFontColor} />
         </div>
         <div
           className={styles.textButton}

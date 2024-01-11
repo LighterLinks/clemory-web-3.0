@@ -1,5 +1,6 @@
 import { CiMap } from "react-icons/ci";
 
+
 export default function MinimapIcon({
   size,
   color,
