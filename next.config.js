@@ -4,6 +4,10 @@ require("dotenv").config({
 });
 
 const nextConfig = {
+  swcMinify: true,
+  compiler: {
+    removeConsole: true,
+  },
   images: {
     domains: ["localhost", "clemory.io"],
   },

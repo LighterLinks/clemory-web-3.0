@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: "Clemory",
   authors : {name: "Lighter Links", url: "https://clemory.io"},
   description: "Personal Information storage",
-  // manifest: "/manifest.json",
+  manifest: "./manifest.ts",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
