@@ -1,10 +1,32 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 import image1 from "./Assets/Image/image1.png";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+
+import tempImage from "./Assets/Image/LandingPage0115.png";
 
 export default function Home() {
+  const imageAspectRatio = 2048 / 432;
+  const [width, setWidth] = useState(0);
+
+  const imageSrc = "https://clemory.io/IMAGES/landingPage/LandingPage0115.webp";
+
+  useEffect(() => {
+    setWidth(window.innerWidth * 0.7);
+    window.addEventListener("resize", () => {
+      setWidth(window.innerWidth * 0.7);
+    });
+    return () => {
+      window.removeEventListener("resize", () => {
+        setWidth(window.innerWidth * 0.7);
+      });
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -21,17 +43,13 @@ export default function Home() {
         />
         <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
       </Head>
-      <div className={styles.page1}>
-        <h1 className={styles.text1}>
-          Easy recall and retrieve all
-          <br />
-          knowledge you once had <p>using AI</p>
-        </h1>
-        <Link className={styles.button1} href="/app">
-          Build your own memory cell now
-        </Link>
-        {/* <p className={styles.text2}>30 Days free trial | No credit card required</p> */}
-        <Image className={styles.image1} src={image1} alt="image1" />
+      <div className="flex w-full h-full align-middle justify-center">
+        <Image
+          src={tempImage}
+          alt="Picture of the author"
+          width={width}
+          height={width * imageAspectRatio}
+        />
       </div>
     </>
   );

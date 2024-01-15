@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --primary-color: #8d64ff;
   --primary-shade-1: #6c49df;
@@ -29,7 +33,7 @@
   --sidebar-background: #ffffff;
   --sidebar-color: #000000;
   --sidebar-stroke: 1px solid #f6f6f6;
-  --sidebar-divider-color: #F6F6F6;
+  --sidebar-divider-color: #f6f6f6;
 
   --toolbar-background: #ffffff;
   --toolbar-background-2: #f6f6f6;
@@ -91,7 +95,7 @@
   --sidebar-divider-color: #999797;
 
   --toolbar-background: #000000;
-  --toolbar-background-2: #2C2C38;
+  --toolbar-background-2: #2c2c38;
   --toolbar-color: #ffffff;
   --toolbar-stroke: 1px solid rgba(255, 255, 255, 0.1);
 
