@@ -27,6 +27,8 @@ import ShareIcon from "./Icons/ShareIcon";
 import TreemapIcon from "./Icons/TreemapIcon";
 import ShareModal from "./ShareModal/ShareModal";
 import { logEvent } from "@/app/API/API";
+import logoPic from "../Assets/Images/logo.png";
+import Image from "next/image";
 
 export default function Toolbar() {
   const dispatch = useAppDispatch();
@@ -124,7 +126,7 @@ export default function Toolbar() {
           display: pathName === "shared" ? "none" : "flex",
         }}
       >
-        <div
+        {/* <div
           className={styles.textButton}
           style={{
             backgroundColor: isSidebarOpen
@@ -135,8 +137,18 @@ export default function Toolbar() {
         >
           <p>Menu</p>
           <MenuIcon size={20} color={colorTheme.toolbarFontColor} />
+        </div> */}
+        <div className={styles.textButton}>
+          <Image
+            src={logoPic}
+            width={30}
+            height={30}
+            alt="logo"
+            className="ml-3"
+          />
+          <p className="text-sm ml-1">Clemory</p>
         </div>
-        <div className={styles.textButtonVoid}></div>
+        {/* <div className={styles.textButtonVoid}></div> */}
       </div>
       <div
         className={styles.wrapper}

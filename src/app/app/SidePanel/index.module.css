@@ -6,12 +6,11 @@
   height: 100%;
   background-color: var(--sidebar-background);
   overflow: hidden;
-  width: 240px;
+  /* width: 240px; */
 
   border-radius: 0px 10px 10px 0px;
   border-radius: 0px;
-  /* border: var(--sidebar-stroke); */
-  border-left: none;
+  border-right: var(--sidebar-stroke);
 
   color: var(--sidebar-color);
   font-family: var(--font-family);

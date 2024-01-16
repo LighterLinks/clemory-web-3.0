@@ -146,7 +146,7 @@ export default function Page() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
+      {/* <div className={styles.header}>
         <div className={styles.title}>
           <p>Welcome {displayName}!</p>
         </div>
@@ -158,10 +158,10 @@ export default function Page() {
           <span>Check out new features in </span>
           <span className={styles.inlineLink}>v1.0.1</span>
         </div>
-      </div>
+      </div> */}
       <div className={styles.body}>
         <div className={styles.title}>
-          Cell Organizer
+          Dashboard
           <div className={styles.titleSetting}>
             <ChevronDown size={20} color={colorTheme.sideBarFontColor} />
           </div>
@@ -207,6 +207,7 @@ export default function Page() {
                   }}
                 />
                 <div className={styles.cardSubtitle}>
+                  <span>Last edited: </span>
                   {parseCreateTime(page.createTime)}
                 </div>
               </div>
@@ -215,9 +216,11 @@ export default function Page() {
           <motion.div
             className={styles.cellAdderCard}
             onClick={handleAddPage}
-            whileHover={{ opacity: 0.5 }}
+            whileHover={{ opacity: 0.8 }}
+            animate={{ opacity: 0.5 }}
           >
-            <PlusIcon size={40} color="#4A4453" />
+            <span>Create a new page</span>
+            <PlusIcon size={30} color="#4A4453" />
           </motion.div>
         </div>
       </div>

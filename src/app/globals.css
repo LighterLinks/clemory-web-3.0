@@ -19,6 +19,8 @@
   --primary-grey-3: #4a4453;
   --primary-grey-4: #afa8ba;
 
+  --primary-red: #D55F5A;
+
   --basic-white: #ffffff;
   --basic-black: #000000;
   --warning-red: #d55f5a;
@@ -44,12 +46,14 @@
 
   --cell-card-background: #ffffff;
   --cell-card-color: #000000;
-  --cell-card-stroke: 1px solid #f6f6f6;
+  --cell-card-color: #D55F5A;
+  --cell-card-stroke: 1.5px solid #e2e2e2;
 
   --font-family: "Roboto", sans-serif;
   --font-size-xxs: 9px;
   --font-size-xs: 11px;
   --font-size-s: 13px;
+  --font-size-se: 15px;
   --font-size-sm: 17px;
   --font-size-sl: 20px;
   --font-size-m: 30px;
@@ -77,6 +81,8 @@
   --primary-grey-2: #757575;
   --primary-grey-3: #4a4453;
   --primary-grey-4: #afa8ba;
+
+  --primary-red: #D55F5A;
 
   --basic-white: #000000;
   --basic-black: #ffffff;

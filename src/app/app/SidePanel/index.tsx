@@ -22,6 +22,10 @@ import CommunityIcon from "../Assets/Icons/CommunityIcon";
 import { updateIsDarkMode } from "@/lib/features/global/settingSlice";
 import ListViewIcon from "../Assets/Icons/ListViewIcon";
 import { defaultTransition } from "@/Designer/animation";
+import LocalStorage from "@/lib/localstroage";
+import { getUserInfo } from "@/app/API/API";
+import { IUser } from "@/lib/interface";
+import Image from "next/image";
 
 export default function SidePanel() {
   const store = useAppStore();
@@ -29,6 +33,8 @@ export default function SidePanel() {
   if (!initialized.current) {
     initialized.current = true;
   }
+  const userId = LocalStorage.getItem("userId");
+  const [userInfo, setUserInfo] = useState<IUser>();
   const isMenuOpen = useAppSelector((state) => state.menuSlice.isOpen);
   const openedMenu = useAppSelector((state) => state.menuSlice.openedMenu);
   const isSidebarOpen = useAppSelector(
@@ -179,6 +185,13 @@ export default function SidePanel() {
     },
   ];
 
+  const getUserData = useCallback(() => {
+    getUserInfo(userId as string).then((res) => {
+      console.log(res);
+      setUserInfo(res.userInfo);
+    });
+  }, []);
+
   const toggleMenu = useCallback(() => {
     dispatch(updateIsMenuOpen(!isMenuOpen));
   }, [isMenuOpen]);
@@ -187,25 +200,32 @@ export default function SidePanel() {
     dispatch(openMenu(index));
   }, []);
 
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
     <AnimatePresence>
       {isSidebarOpen && (
         <motion.nav
           key="side-panel"
           initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
+          animate={{ opacity: 1, x: 0, width: isMenuOpen ? 240 : 80 }}
           exit={{ opacity: 0, x: -100 }}
           transition={defaultTransition}
           className={styles.container}
         >
-          {/* <motion.div
-        className={styles.expandIcon}
-        onClick={toggleMenu}
-        animate={{ left: isMenuOpen ? 225 : 85, rotate: isMenuOpen ? 0 : 180 }}
-        transition={{ duration: TRANSITION_DURATION }}
-      >
-        <LeftExpandIcon size={24} color={colorTheme.sideBarFontColor} />
-      </motion.div> */}
+          <motion.div
+            className={styles.expandIcon}
+            onClick={toggleMenu}
+            animate={{
+              left: isMenuOpen ? 225 : 65,
+              rotate: isMenuOpen ? 0 : 180,
+            }}
+            transition={defaultTransition}
+          >
+            <LeftExpandIcon size={24} color={colorTheme.sideBarFontColor} />
+          </motion.div>
           <div
             className={styles.header}
             style={{ width: isMenuOpen ? "80%" : "fit-content" }}
@@ -216,12 +236,20 @@ export default function SidePanel() {
                 window.location.href = "/";
               }}
             >
-              <ClemoryLogoAlt size={45} />
+              {/* <ClemoryLogoAlt size={45} /> */}
+              <Image
+                src={userInfo?.avatarUrl!}
+                alt="user-avatar"
+                width={45}
+                height={45}
+              />
             </div>
             {isMenuOpen && (
               <div className={styles.title}>
-                <h1>Clemory</h1>
-                <h2>for everyone</h2>
+                {/* <h1>Clemory</h1>
+                <h2>for everyone</h2> */}
+                <h1>{userInfo?.displayName}</h1>
+                <h2>{userInfo?.email}</h2>
               </div>
             )}
           </div>

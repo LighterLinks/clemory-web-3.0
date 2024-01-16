@@ -3,7 +3,8 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
-  background-color: var(--default-background);
+  /* background-color: var(--default-background); */
+  background-color: var(--basic-white);
   user-select: none;
   overflow: auto;
 }
@@ -13,6 +14,7 @@
   color: var(--primary-color);
   cursor: pointer;
 }
+
 .inlineLink:hover {
   text-decoration: underline;
 }
@@ -50,9 +52,9 @@
   align-items: center;
   white-space: nowrap;
 
-  margin-top: 20px;
-  margin-bottom: 5px;
-  font-size: var(--font-size-m);
+  margin-left: 50px;
+  margin-top: 50px;
+  font-size: var(--font-size-l);
   font-weight: var(--font-weight-regular);
 }
 
@@ -95,8 +97,9 @@
 .cellGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, auto));
-  row-gap: 10px;
-  column-gap: 10px;
+  padding: 20px 50px 50px 50px;
+  row-gap: 30px;
+  column-gap: 30px;
 
   /* overflow: auto; */
 
@@ -109,26 +112,27 @@
   flex-direction: column;
 
   height: 200px;
-  /* border: 1px solid var(--primary-grey-2); */
+  border: var(--cell-card-stroke);
   background-color: var(--cell-card-background);
 
-  border-radius: 5px;
+  border-radius: 10px;
 
   user-select: none;
   cursor: pointer;
 }
+
 .cellCard:hover {
   border: 0.6px solid var(--highlight-border-color);
 }
 
 .cellAdderCard {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
 
-  height: 200px;
-  border: 2px dotted var(--primary-grey-2);
+  height: 80px;
+  border: 1px solid var(--primary-grey-2);
 
   border-radius: 5px;
 
@@ -160,23 +164,28 @@
 }
 
 .cardTitle {
-  margin: 10px 5px 0px 7px;
+  margin: 5px 5px 0px 7px;
   color: var(--cell-card-color);
-  font-size: var(--font-size-s);
+  font-size: var(--font-size-se);
   font-weight: var(--font-weight-regular);
   outline: none;
   box-sizing: border-box;
   border: 1px solid var(--primary-grey-2);
   background-color: transparent;
 }
+
 .cardTitle:read-only {
   border: none;
 }
 
 .cardSubtitle {
-  padding: 5px 0px 0px 7px;
+  padding: 0px 0px 0px 7px;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-light);
+}
+
+.cardSubtitle span {
+  color: var(--primary-grey-2);
 }
 
 @media screen and (max-width: 700px) {
@@ -189,6 +198,7 @@
   .header {
     display: none;
   }
+
   .body {
     height: 100%;
   }

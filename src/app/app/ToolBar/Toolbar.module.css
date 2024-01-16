@@ -60,7 +60,7 @@
 
 .textButtonVoid {
   display: flex;
-  width: 5%;
+  width: 200px;
   /* flex-direction: row; */
   flex-direction: row;
   justify-content: center;

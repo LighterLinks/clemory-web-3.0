@@ -4,6 +4,7 @@
     width: 100vw;
     height: 100vh;
     background-color: var(--default-background);
+    background-color: var(--basic-white);
 }
 
 .main {
