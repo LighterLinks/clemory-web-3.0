@@ -48,6 +48,7 @@ export default function EditorPanel({
   const isSidebarOpen = useAppSelector(
     (state) => state.toolbarSlice.isSidebarOpen
   );
+  const isSidebarExpanded = useAppSelector((state) => state.menuSlice.isOpen);
   const currentNodes = useAppSelector((state) => state.nodeSlice.nodes);
   const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
   const [editorIndex, setEditorIndex] = useState<number>(-1);
@@ -85,7 +86,6 @@ export default function EditorPanel({
     [currentNodes]
   );
 
-
   const handleClickTab = useCallback((nodeId: string) => {
     dispatch(updateCurrentEditor(nodeId));
   }, []);
@@ -113,21 +113,32 @@ export default function EditorPanel({
           animate={{
             opacity: 1,
             x: 0,
-            width: isEditorPanelFullsized ? `calc(100% - ${isSidebarOpen ? '240px' : '0px'})` : "50%",
+            width: isEditorPanelFullsized
+              ? `calc(100% - ${isSidebarExpanded ? "240px" : "80px"})`
+              : "50%",
             maxWidth: isEditorPanelFullsized ? "none" : "800px",
             minWidth: isEditorPanelFullsized ? "none" : "400px",
           }}
           exit={{ opacity: 0, x: 100 }}
           transition={defaultTransition}
         >
-          <button className={styles.closeBtn} onClick={handleClosePanel} title="Close">
+          <button
+            className={styles.closeBtn}
+            onClick={handleClosePanel}
+            title="Close"
+          >
             <DoubleChevron size={20} color={colorTheme.primaryGrey4} />
           </button>
-          <button className={styles.expandBtn} onClick={handleExpandPanel} title={`${isEditorPanelFullsized ? 'Reduce' : 'Expand'}`}>
-            {isEditorPanelFullsized ?
-              <CollapseIcon size={20} color={colorTheme.primaryGrey4} /> :
+          <button
+            className={styles.expandBtn}
+            onClick={handleExpandPanel}
+            title={`${isEditorPanelFullsized ? "Reduce" : "Expand"}`}
+          >
+            {isEditorPanelFullsized ? (
+              <CollapseIcon size={20} color={colorTheme.primaryGrey4} />
+            ) : (
               <ExpandIcon size={20} color={colorTheme.primaryGrey4} />
-            }
+            )}
           </button>
           <motion.div className={styles.tabs}>
             {openedEditors.map((nodeId: string) => (
@@ -166,11 +177,11 @@ export default function EditorPanel({
             ) : (
               <Editor nodeInfo={currentNodes[editorIndex]} />
             )} */}
-            {openedEditors.length === 0 &&
+            {openedEditors.length === 0 && (
               <div className={styles.emptyEditor}>
                 <EmptyDocIcon size={200} color={colorTheme.primaryGrey4} />
               </div>
-            }
+            )}
             {openedEditors.map((nodeId: string) => (
               <div
                 key={nodeId}

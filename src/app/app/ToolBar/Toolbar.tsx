@@ -141,8 +141,8 @@ export default function Toolbar() {
         <div className={styles.textButton}>
           <Image
             src={logoPic}
-            width={30}
-            height={30}
+            width={40}
+            height={40}
             alt="logo"
             className="ml-3"
           />
