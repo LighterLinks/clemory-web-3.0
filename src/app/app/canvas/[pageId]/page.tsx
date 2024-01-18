@@ -117,7 +117,6 @@ function FlowView() {
       queryClient.invalidateQueries({
         queryKey: ["nodes"],
       });
-      extractThumbnail();
     },
   });
 
@@ -144,7 +143,6 @@ function FlowView() {
       queryClient.invalidateQueries({
         queryKey: ["nodes"],
       });
-      extractThumbnail();
     },
   });
 
@@ -330,16 +328,19 @@ function FlowView() {
   let toastId: string | undefined = "";
 
   useEffect(() => {
+    const timer = setInterval(() => {
+      extractThumbnail();
+    }, 5000);
+
     document.getElementById("mainFlow")?.addEventListener("mousemove", (e) => {
       setCurrentMousePos({ x: e.clientX, y: e.clientY });
     });
-
-    // extractThumbnail();
 
     return () => {
       document
         .getElementById("mainFlow")
         ?.removeEventListener("mousemove", () => {});
+      clearInterval(timer);
     };
   }, []);
 

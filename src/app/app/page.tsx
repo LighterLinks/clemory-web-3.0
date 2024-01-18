@@ -9,6 +9,7 @@ import {
   getAllPages,
   getUserInfo,
   updatePage,
+  uploadThumbnailImage,
 } from "../API/API";
 import {
   createRef,
