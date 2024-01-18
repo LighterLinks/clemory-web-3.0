@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 import getQueryClient from "@/lib/getQueryClient";
 import { useMutation } from "@tanstack/react-query";
 import { deleteNode_async } from "@/app/API/API_async";
-import { deleteToast } from "@/app/app/Assets/Toasts/toasts";
+import { cannotDeleteToast, deleteToast } from "@/app/app/Assets/Toasts/toasts";
 import Image from "next/image";
 
 export default function ImageNode(props: NodeProps<INode>) {
@@ -30,7 +30,8 @@ export default function ImageNode(props: NodeProps<INode>) {
 
   const queryClient = getQueryClient();
   const deleteNodeInfo = useMutation({
-    mutationFn: (nodeInfo: INode) => deleteNode_async(userId, nodeInfo.nodeId, pageId),
+    mutationFn: (nodeInfo: INode) =>
+      deleteNode_async(userId, nodeInfo.nodeId, pageId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["nodes"],

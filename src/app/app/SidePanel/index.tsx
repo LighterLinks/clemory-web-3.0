@@ -230,13 +230,7 @@ export default function SidePanel() {
             className={styles.header}
             style={{ width: isMenuOpen ? "80%" : "fit-content" }}
           >
-            <div
-              className={styles.logo}
-              onClick={() => {
-                window.location.href = "/";
-              }}
-            >
-              {/* <ClemoryLogoAlt size={45} /> */}
+            <div className={styles.logo}>
               <Image
                 src={userInfo?.avatarUrl!}
                 alt="user-avatar"

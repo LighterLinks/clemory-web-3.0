@@ -10,6 +10,9 @@ export const updateToast = () => toast.success("Element updated successfully!");
 
 export const errorToast = () => toast.error("Error");
 
+export const cannotDeleteToast = () =>
+  toast.error("Cannot delete opened tab. Please close it first.");
+
 export const copiedToast = () =>
   toast.success("Copied to clipboard!", {
     style: {

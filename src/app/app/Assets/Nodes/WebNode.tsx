@@ -21,7 +21,11 @@ import {
   openEditor,
   updateIsEditorPanelOpen,
 } from "@/lib/features/editor/editorSlice";
-import { deleteToast, infoToast } from "@/app/app/Assets/Toasts/toasts";
+import {
+  cannotDeleteToast,
+  deleteToast,
+  infoToast,
+} from "@/app/app/Assets/Toasts/toasts";
 import { deleteNode } from "@/app/API/API";
 import LocalStorage from "@/lib/localstroage";
 import { usePathname } from "next/navigation";
@@ -35,6 +39,9 @@ export default function WebNode(props: NodeProps<INode>) {
   const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
   const colorTheme = isDarkMode ? ColorSchemeDark : ColorScheme;
   const dispatch = useAppDispatch();
+  const openedEditors = useAppSelector(
+    (state) => state.editorSlice.openedEditors
+  );
 
   const containerStyle = {
     width: NodeWebLayout.width,
@@ -120,12 +127,16 @@ export default function WebNode(props: NodeProps<INode>) {
   }, []);
 
   const handleDelete = useCallback(() => {
+    if (openedEditors.includes(props.data.nodeId)) {
+      cannotDeleteToast();
+      return;
+    }
     if (window.confirm("Are you sure you want to delete this node?")) {
       deleteNode(userId, props.data.nodeId, pageId).then((res) => {
         deleteToast();
       });
     }
-  }, []);
+  }, [openedEditors]);
 
   const handleUrlClick = useCallback(() => {
     window.open(props.data.url, "_blank");

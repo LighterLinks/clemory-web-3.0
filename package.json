@@ -19,6 +19,7 @@
     "embla-carousel-react": "^8.0.0-rc19",
     "firebase": "^10.7.1",
     "framer-motion": "^10.16.16",
+    "html-to-image": "^1.11.11",
     "mixpanel-browser": "^2.48.1",
     "next": "13.5.5",
     "next-redux-wrapper": "^8.1.0",

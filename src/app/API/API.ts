@@ -711,3 +711,15 @@ export async function setNeedToCalculate(
 
   return data;
 }
+
+export async function uploadThumbnailImage(file: any) {
+  const body = new FormData();
+  body.append("file", file);
+
+  const ret = await fetch("https://clemory.io/api/uploadThumbnailImage", {
+    method: "POST",
+    body: body,
+  });
+  const res = (await ret.json()).imageUrl;
+  return res;
+}

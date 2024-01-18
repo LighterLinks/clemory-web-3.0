@@ -15,7 +15,7 @@ import CheckIcon from "./Assets/CheckIcon";
 import { usePathname } from "next/navigation";
 import { deleteNode, updateNode } from "@/app/API/API";
 import LocalStorage from "@/lib/localstroage";
-import { deleteToast, successToast } from "../Toasts/toasts";
+import { cannotDeleteToast, deleteToast, successToast } from "../Toasts/toasts";
 
 export default function TextNode(props: NodeProps<INode>) {
   const userId = LocalStorage.getItem("userId") as string;
@@ -29,6 +29,9 @@ export default function TextNode(props: NodeProps<INode>) {
     height: 0,
   });
   const textRef = useRef<HTMLInputElement>(null);
+  const openedEditors = useAppSelector(
+    (state) => state.editorSlice.openedEditors
+  );
 
   const calculateTextWidthHeight = (text: string) => {
     const canvas = document.createElement("canvas");
@@ -104,12 +107,16 @@ export default function TextNode(props: NodeProps<INode>) {
   }, []);
 
   const handleDelete = useCallback(() => {
+    if (openedEditors.includes(props.data.nodeId)) {
+      cannotDeleteToast();
+      return;
+    }
     if (window.confirm("Are you sure you want to delete this node?")) {
       deleteNode(userId, props.data.nodeId, pageId).then((res) => {
         deleteToast();
       });
     }
-  }, []);
+  }, [openedEditors]);
 
   return (
     <motion.div
@@ -141,12 +148,12 @@ export default function TextNode(props: NodeProps<INode>) {
           </div>
         </>
       )}
-      <form className={styles.textInputWrapper}
-        onSubmit={handleSave}
-      >{isEditing && (
-        <button className={styles.textButton}>
-          <CheckIcon size={8} color={colorTheme.toolbarFontColor} />
-        </button>)}
+      <form className={styles.textInputWrapper} onSubmit={handleSave}>
+        {isEditing && (
+          <button className={styles.textButton}>
+            <CheckIcon size={8} color={colorTheme.toolbarFontColor} />
+          </button>
+        )}
         <input
           className={styles.textInput}
           ref={textRef}

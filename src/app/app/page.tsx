@@ -29,6 +29,8 @@ import { updateIsDarkMode } from "@/lib/features/global/settingSlice";
 import ChevronDown from "./Assets/Icons/ChevronDown";
 import LocalStorage from "@/lib/localstroage";
 import { generateMixpanelEvent, mixpanelEventName } from "@/lib/mixpanelAction";
+import defaultThumbnail from "./Assets/Images/defaultThumbnail.png";
+import Image from "next/image";
 
 export default function Page() {
   const userId = LocalStorage.getItem("userId");
@@ -175,14 +177,13 @@ export default function Page() {
                 onClick={() => handlePageClick(page.pageId)}
               >
                 <div className={styles.cardImage}>
-                  <img
+                  <Image
                     className={styles.cardImg}
-                    src={
-                      "https://clemory.io/IMAGES/pageThumbnail/" +
-                      page.pageId +
-                      ".png"
-                    }
-                    alt=""
+                    width={400}
+                    height={300}
+                    src={page.thumbnailUrl!}
+                    alt="thumbnail"
+                    style={{ flexShrink: 0 }}
                   />
                 </div>
                 <input

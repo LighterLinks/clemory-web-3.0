@@ -1,3 +1,5 @@
+"use client";
+
 import { Handle, NodeProps, Position, useReactFlow } from "reactflow";
 import { INode } from "@/lib/interface";
 import { motion } from "framer-motion";
@@ -14,11 +16,20 @@ import {
 import styles from "./styles/Node.module.css";
 import CrossIcon from "./Assets/CrossIcon";
 import AudioIcon from "./Assets/AudioIcon";
+import { cannotDeleteToast, deleteToast } from "../Toasts/toasts";
+import { deleteNode } from "@/app/API/API";
+import LocalStorage from "@/lib/localstroage";
+import { usePathname } from "next/navigation";
 // import AudioPlayer from "../../Widget/AudioPlayer/AudioPlayer";
 
 export default function AudioNode(props: NodeProps<INode>) {
+  const userId = LocalStorage.getItem("userId") as string;
+  const pageId = usePathname().split("/")[3];
   const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
   const colorTheme = isDarkMode ? ColorSchemeDark : ColorScheme;
+  const openedEditors = useAppSelector(
+    (state) => state.editorSlice.openedEditors
+  );
 
   const containerStyle = {
     width: NodeAudioLayout.width,
@@ -73,7 +84,17 @@ export default function AudioNode(props: NodeProps<INode>) {
   const { title, text } = getTitleAndText(props.data.content);
 
   const handleEdit = useCallback(() => {}, []);
-  const handleDelete = useCallback(() => {}, []);
+  const handleDelete = useCallback(() => {
+    if (openedEditors.includes(props.data.nodeId)) {
+      cannotDeleteToast();
+      return;
+    }
+    if (window.confirm("Are you sure you want to delete this node?")) {
+      deleteNode(userId, props.data.nodeId, pageId).then((res) => {
+        deleteToast();
+      });
+    }
+  }, [openedEditors]);
 
   return (
     <motion.div

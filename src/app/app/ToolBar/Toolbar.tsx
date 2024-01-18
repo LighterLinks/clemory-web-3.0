@@ -138,7 +138,10 @@ export default function Toolbar() {
           <p>Menu</p>
           <MenuIcon size={20} color={colorTheme.toolbarFontColor} />
         </div> */}
-        <div className={styles.textButton}>
+        <div
+          className={styles.textButton}
+          onClick={() => (window.location.href = "/")}
+        >
           <Image
             src={logoPic}
             width={40}

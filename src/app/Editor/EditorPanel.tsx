@@ -112,6 +112,39 @@ export default function EditorPanel({
     dispatch(updateIsEditorPanelOpen(false));
   }, []);
 
+  const handleOnKeyDown = useCallback(
+    (e: any) => {
+      if (e.key === "Escape") {
+        handleClosePanel();
+      }
+      // if (e.key === "ArrowLeft") {
+      //   const index = openedEditors.findIndex(
+      //     (nodeId: string) => nodeId === currentEditor
+      //   );
+      //   if (index === 0) {
+      //     const lastTab = openedEditors[openedEditors.length - 1];
+      //     dispatch(updateCurrentEditor(lastTab));
+      //   } else {
+      //     const prevTab = openedEditors[index - 1];
+      //     dispatch(updateCurrentEditor(prevTab));
+      //   }
+      // }
+      // if (e.key === "ArrowRight") {
+      //   const index = openedEditors.findIndex(
+      //     (nodeId: string) => nodeId === currentEditor
+      //   );
+      //   if (index === openedEditors.length - 1) {
+      //     const firstTab = openedEditors[0];
+      //     dispatch(updateCurrentEditor(firstTab));
+      //   } else {
+      //     const nextTab = openedEditors[index + 1];
+      //     dispatch(updateCurrentEditor(nextTab));
+      //   }
+      // }
+    },
+    [openedEditors, currentEditor]
+  );
+
   const handleExpandPanel = useCallback(() => {
     dispatch(updateIsEditorPanelFullsized(!isEditorPanelFullsized));
   }, [isEditorPanelFullsized]);
@@ -122,6 +155,7 @@ export default function EditorPanel({
         <motion.div
           className={styles.container}
           key="editor-panel"
+          onKeyDown={handleOnKeyDown}
           initial={{ opacity: 0, x: 100 }}
           animate={{
             opacity: 1,

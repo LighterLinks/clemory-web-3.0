@@ -21,6 +21,8 @@ import ReactFlow, {
   getRectOfNodes,
   getTransformForBounds,
   Node,
+  getNodesBounds,
+  getViewportForBounds,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -31,6 +33,7 @@ import {
   pageExists,
   updateNodePosition,
   uploadImage,
+  uploadThumbnailImage,
 } from "@/app/API/API";
 import { INode, NODETYPE } from "@/lib/interface";
 import AudioNode from "../../Assets/Nodes/AudioNode";
@@ -57,6 +60,8 @@ import { stopLocate } from "@/lib/features/canvas/chatSlice";
 import WebNodePH from "../../Assets/Nodes/PlaceHolders/WebNodePH";
 import ImageNodePH from "../../Assets/Nodes/PlaceHolders/ImageNodePH";
 import { openEditor } from "@/lib/features/editor/editorSlice";
+import { b64toBlob } from "@/lib/utils/utils";
+import { toPng } from "html-to-image";
 
 function FlowView() {
   const pageId = usePathname().split("/")[3];
@@ -68,7 +73,9 @@ function FlowView() {
   const currentNodes = useAppSelector((state) => state.nodeSlice.nodes);
   const needLocate = useAppSelector((state) => state.chatSlice.needLocate);
   const locateToPos = useAppSelector((state) => state.chatSlice.postion);
-  const isEditorOpen = useAppSelector((state) => state.editorSlice.isEditorPanelOpen);
+  const isEditorOpen = useAppSelector(
+    (state) => state.editorSlice.isEditorPanelOpen
+  );
   const colorTheme = isDarkMode ? ColorSchemeDark : ColorScheme;
   const dispatch = useAppDispatch();
   const queryClient = getQueryClient();
@@ -110,6 +117,7 @@ function FlowView() {
       queryClient.invalidateQueries({
         queryKey: ["nodes"],
       });
+      extractThumbnail();
     },
   });
 
@@ -136,18 +144,19 @@ function FlowView() {
       queryClient.invalidateQueries({
         queryKey: ["nodes"],
       });
+      extractThumbnail();
     },
   });
 
   const initialNodes = data
     ? data.nodeInfo.map((node: INode) => {
-      return {
-        id: node.nodeId,
-        type: node.type,
-        data: node,
-        position: { x: node.x, y: node.y },
-      };
-    })
+        return {
+          id: node.nodeId,
+          type: node.type,
+          data: node,
+          position: { x: node.x, y: node.y },
+        };
+      })
     : [];
 
   const updateCurrentNodes = useCallback(() => {
@@ -191,6 +200,41 @@ function FlowView() {
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const extractThumbnail = useCallback(() => {
+    console.log("extracting thumbnail");
+    const IMAGE_WIDTH = 800;
+    const IMAGE_HEIGHT = 500;
+    const nodeBounds = getRectOfNodes(getNodes());
+    const transform = getTransformForBounds(
+      nodeBounds,
+      IMAGE_WIDTH,
+      IMAGE_HEIGHT,
+      0.5,
+      2
+    );
+    toPng(document.querySelector(".react-flow__viewport") as HTMLElement, {
+      width: IMAGE_WIDTH,
+      height: IMAGE_HEIGHT,
+      backgroundColor: colorTheme.defaultBackground,
+      style: {
+        width: `${IMAGE_WIDTH}px`,
+        height: `${IMAGE_HEIGHT}px`,
+        transform: `translate(${transform[0]}px, ${transform[1]}px) scale(${transform[2]})`,
+        background: colorTheme.defaultBackground,
+      },
+    }).then((dataUrl) => {
+      const blob = b64toBlob(
+        dataUrl.replace("data:image/png;base64,", ""),
+        "image/png"
+      );
+      const file = new File([blob], `${pageId}`, {
+        type: "image/png",
+        lastModified: Date.now(),
+      });
+      uploadThumbnailImage(file).then((res) => {});
+    });
+  }, [pageId]);
 
   const handleOnSelectionDragStop = useCallback((event: any, nodes: any) => {
     if (nodes) {
@@ -266,8 +310,7 @@ function FlowView() {
     (event: React.MouseEvent, node: Node) => {
       if (isEditorOpen) {
         dispatch(openEditor(node.data.nodeId));
-      }
-      else {
+      } else {
         fitView({
           padding: 1,
           duration: 0.5,
@@ -296,7 +339,7 @@ function FlowView() {
     return () => {
       document
         .getElementById("mainFlow")
-        ?.removeEventListener("mousemove", () => { });
+        ?.removeEventListener("mousemove", () => {});
     };
   }, []);
 
@@ -322,18 +365,18 @@ function FlowView() {
     let genData = {};
     const urlRegex = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
       "i"
     ); // fragment locator
     const imgRegex = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,})" + // domain name
-      "(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\.(png|jpe?g|gif|svg))$",
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,})" + // domain name
+        "(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\.(png|jpe?g|gif|svg))$",
       "i"
     ); // image format
 
@@ -440,17 +483,17 @@ function FlowView() {
         bgColorIdx: 0,
         content: [NODETYPE.NOTE, NODETYPE.TEXT].includes(nodeType)
           ? data.text.map((t: string, index: number) => {
-            return {
-              type: "paragraph",
-              content: [
-                {
-                  type: "text",
-                  text: t,
-                  styles: {},
-                },
-              ],
-            };
-          })
+              return {
+                type: "paragraph",
+                content: [
+                  {
+                    type: "text",
+                    text: t,
+                    styles: {},
+                  },
+                ],
+              };
+            })
           : [],
         url: nodeType === NODETYPE.WEB ? data.url : "",
         imageUrl: nodeType === NODETYPE.IMAGE ? data.imgUrl : "",
