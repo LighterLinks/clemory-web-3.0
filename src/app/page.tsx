@@ -15,6 +15,7 @@ import image4_2 from "./Assets/Image/Image4_2.png";
 import image5_1 from "./Assets/Image/Image5_1.png";
 import logo1 from "./Assets/Image/logo1.png";
 import logo2 from "./Assets/Image/logo2.png";
+import logo3 from "./Assets/Image/logo3.png";
 
 import Head from "next/head";
 import { useEffect, useState } from "react";
@@ -23,10 +24,44 @@ import logoPic from "../app/app/Assets/Images/logo.png";
 import LocalStorage from "@/lib/localstroage";
 
 import { motion } from "framer-motion";
+import { faq, faqs1, faqs2, faqs3 } from "./Assets/FAQs/FAQs";
+
+const AccordionItem = ({
+  item,
+  isActive,
+  setActive,
+}: {
+  item: faq;
+  isActive: boolean;
+  setActive: () => void;
+}) => (
+  <div className="border-b">
+    <button
+      className="flex justify-between items-center w-full p-5 bg-white text-left"
+      onClick={setActive}
+    >
+      <span>{item.question}</span>
+      <span>{isActive ? "-" : "+"}</span>
+    </button>
+    <div
+      className={`transition-max-height ${
+        isActive ? "max-h-96 p-5 mb-3 bg-[#FBFBFB] rounded-xl" : "max-h-0"
+      } overflow-hidden`}
+      style={{ width: "100%" }}
+    >
+      {item.answer}
+    </div>
+  </div>
+);
 
 export default function Home() {
   const userId = LocalStorage.getItem("userId");
   const [isSignIn, setIsSignIn] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const handleSetActive = (index: number | null) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
   useEffect(() => {
     if (userId) {
@@ -179,6 +214,79 @@ export default function Home() {
                 and see others’ too
               </p>
               <Image src={image5_1} alt="image1_1" />
+            </motion.div>
+            <div className="flex flex-row items-start justify-start w-full px-16 mb-10 gap-5">
+              <Image src={logo3} width={50} alt="logo1" />
+              <p className="text-4xl font-medium leading-normal">FAQs</p>
+            </div>
+            <motion.div
+              className="flex flex-col items-start justify-center px-20 gap-y-2 mb-36"
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              // animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <p className="text-lg font-normal leading-normal">
+                <span style={{ color: "#D55F5A" }}>Product and features</span>
+              </p>
+              <div className="divide-y divide-gray-200">
+                {faqs1.map((item, index) => (
+                  <AccordionItem
+                    key={index}
+                    item={item}
+                    isActive={index === activeIndex}
+                    setActive={() => handleSetActive(index)}
+                  />
+                ))}
+              </div>
+            </motion.div>
+            <motion.div
+              className="flex flex-col items-start justify-center px-20 gap-y-2 mb-36"
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              // animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <p className="text-lg font-normal leading-normal">
+                <span style={{ color: "#3B7DF9" }}>
+                  Privacy, Security and Backup
+                </span>
+              </p>
+              <div className="divide-y divide-gray-200">
+                {faqs2.map((item, index) => (
+                  <AccordionItem
+                    key={index}
+                    item={item}
+                    isActive={index + faqs1.length === activeIndex}
+                    setActive={() => handleSetActive(index + faqs1.length)}
+                  />
+                ))}
+              </div>
+            </motion.div>
+            <motion.div
+              className="flex flex-col items-start justify-center px-20 gap-y-2 mb-36"
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              // animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <p className="text-lg font-normal leading-normal">
+                <span style={{ color: "#FFB865" }}>Team</span>
+              </p>
+              <div className="divide-y divide-gray-200">
+                {faqs3.map((item, index) => (
+                  <AccordionItem
+                    key={index}
+                    item={item}
+                    isActive={
+                      index + faqs1.length + faqs2.length === activeIndex
+                    }
+                    setActive={() =>
+                      handleSetActive(index + faqs1.length + faqs2.length)
+                    }
+                  />
+                ))}
+              </div>
             </motion.div>
           </div>
         </div>

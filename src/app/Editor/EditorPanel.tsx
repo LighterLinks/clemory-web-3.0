@@ -4,7 +4,12 @@ import styles from "./Styles/EditorPanel.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useCallback, useEffect, useState } from "react";
-import { getAllNodes, readNode, readPage } from "../API/API";
+import {
+  getAllNodes,
+  readNode,
+  readPage,
+  setNeedToCalculate,
+} from "../API/API";
 import LocalStorage from "@/lib/localstroage";
 import { INode } from "@/lib/interface";
 import { openTab } from "@/lib/features/sidePanel/menuSlice";
@@ -76,6 +81,10 @@ export default function EditorPanel({
     }
   }, [openedEditors, currentNodes]);
 
+  const invokeNodeCalculation = useCallback((nodeId: string) => {
+    setNeedToCalculate(userId, nodeId, true);
+  }, []);
+
   const getNodeTitle = useCallback(
     (nodeId: string) => {
       const node = currentNodes.find((node: INode) => node.nodeId === nodeId);
@@ -91,11 +100,15 @@ export default function EditorPanel({
   }, []);
 
   const handleCloseTab = useCallback((nodeId: string) => {
+    invokeNodeCalculation(nodeId);
     dispatch(closeEditor(nodeId));
     gotoFirstTab();
   }, []);
 
   const handleClosePanel = useCallback(() => {
+    openedEditors.forEach((nodeId: string) => {
+      invokeNodeCalculation(nodeId);
+    });
     dispatch(updateIsEditorPanelOpen(false));
   }, []);
 

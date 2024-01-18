@@ -691,3 +691,23 @@ export async function logEvent(category: string) {
 
   return data;
 }
+
+export async function setNeedToCalculate(
+  userId: string,
+  nodeId: string,
+  value: boolean
+) {
+  const apiURL = baseURL + "/setNeedToCalculate";
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId: userId, nodeId: nodeId, value: value }),
+  };
+
+  const response = await fetch(apiURL, options);
+  const data = await response.json();
+
+  return data;
+}
