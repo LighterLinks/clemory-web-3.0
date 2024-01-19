@@ -31,6 +31,7 @@
     "react-redux": "^9.0.4",
     "react-resizable": "^3.0.5",
     "react-router-dom": "^6.21.1",
+    "react-social-icons": "^6.9.0",
     "react-spinners": "^0.13.8",
     "reactflow": "^11.10.1",
     "sharp": "^0.33.1"

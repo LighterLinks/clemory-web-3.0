@@ -25,6 +25,8 @@ import LocalStorage from "@/lib/localstroage";
 
 import { motion } from "framer-motion";
 import { faq, faqs1, faqs2, faqs3 } from "./Assets/FAQs/FAQs";
+import { SocialIcon } from "react-social-icons";
+import { CiMail } from "react-icons/ci";
 
 const AccordionItem = ({
   item,
@@ -86,10 +88,18 @@ export default function Home() {
         <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
       </Head>
       <div className="flex flex-col items-center justify-center w-full">
-        <div className="flex flex-row w-full bg-white p-2 fixed top-0 left-0 align-middle items-center justify-between border-b-[1px]">
+        <div className="flex flex-row w-full bg-white p-2 fixed top-0 left-0 align-middle items-center justify-between border-b-[1px] z-50">
           <div className="flex flex-row items-center gap-2 text-black text-lg">
             <Image src={logoPic} width={40} height={40} alt="logo" />
             <p>Clemory</p>
+          </div>
+          <div className="flex flex-row items-center gap-1">
+            {/* <Link href="/app">
+              <p className="flex flex-row align-middle items-center gap-2 text-white bg-[#D55F5A] p-2 px-3 rounded-lg hover:opacity-85">
+                <p className="hidden md:flex">Contact Us</p>
+                <CiMail size={24} />
+              </p>
+            </Link> */}
           </div>
           <div className="flex flex-row items-center gap-3">
             {isSignIn ? (
@@ -106,6 +116,17 @@ export default function Home() {
                 <Link href="/signup">
                   <p className="text-white bg-[#D55F5A] ml-4 p-2 px-3 rounded-lg hover:opacity-85">
                     Get Started Now!
+                  </p>
+                </Link>
+                <Link href="https://discord.gg/bzUzYvY5" target="_blank">
+                  <p className="flex flex-row align-middle items-center gap-2 text-[#FFF] bg-[#5865F2] p-2 px-3 rounded-lg hover:opacity-85">
+                    <p className="hidden md:flex">Join our Server!</p>
+                    <SocialIcon
+                      url="https://discord.com/"
+                      fgColor="#5865F2"
+                      bgColor="#FFF"
+                      style={{ width: 24, height: 24 }}
+                    />
                   </p>
                 </Link>
               </>
