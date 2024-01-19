@@ -103,11 +103,24 @@ export default function Home() {
           </div>
           <div className="flex flex-row items-center gap-3">
             {isSignIn ? (
-              <Link href="/app">
-                <p className="text-white bg-[#D55F5A] ml-4 p-2 px-3 rounded-lg hover:opacity-85">
-                  Go to App
-                </p>
-              </Link>
+              <>
+                <Link href="/app">
+                  <p className="text-white bg-[#D55F5A] ml-4 p-2 px-3 rounded-lg hover:opacity-85">
+                    Go to App
+                  </p>
+                </Link>
+                <Link href="https://discord.gg/bzUzYvY5" target="_blank">
+                  <p className="flex flex-row align-middle items-center gap-2 text-[#FFF] bg-[#5865F2] p-2 px-3 rounded-lg hover:opacity-85">
+                    <p className="hidden md:flex">Join our Server!</p>
+                    <SocialIcon
+                      url="https://discord.com/"
+                      fgColor="#5865F2"
+                      bgColor="#FFF"
+                      style={{ width: 24, height: 24 }}
+                    />
+                  </p>
+                </Link>
+              </>
             ) : (
               <>
                 <Link href="/signin">
