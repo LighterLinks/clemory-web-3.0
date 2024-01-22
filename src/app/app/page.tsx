@@ -32,15 +32,41 @@ import LocalStorage from "@/lib/localstroage";
 import { generateMixpanelEvent, mixpanelEventName } from "@/lib/mixpanelAction";
 import defaultThumbnail from "./Assets/Images/defaultThumbnail.png";
 import Image from "next/image";
+import {
+  Menu,
+  Item,
+  Separator,
+  Submenu,
+  useContextMenu,
+} from "react-contexify";
+import ContextMenu from "./Assets/ContextMenu/ContextMenu";
+import DeleteIcon from "./Assets/Nodes/Assets/DeleteIcon";
+import MinusCircleIcon from "./Assets/Icons/MinusCircleIcon";
+
+const MENU_ID = "menu-id";
 
 export default function Page() {
   const userId = LocalStorage.getItem("userId");
   const isAuth = LocalStorage.getItem("isAuth");
+  const [displayName, setDisplayName] = useState<string>("");
+  const [pages, setPages] = useState<IPage[]>([]);
+  const [isEditingLayout, setIsEditingLayout] = useState<boolean>(false);
+  const pageNameRefs = useRef<HTMLInputElement[]>([]);
 
   const isDarkMode = useAppSelector((state) => state.settingSlice.isDarkMode);
   const dispatch = useAppDispatch();
 
   const [colorTheme, setColorTheme] = useState<typeof ColorScheme>(ColorScheme);
+
+  const { show } = useContextMenu({
+    id: MENU_ID,
+  });
+
+  function displayMenu(e: any) {
+    show({
+      event: e,
+    });
+  }
 
   useEffect(() => {
     if (LocalStorage.getItem("theme") === "dark") {
@@ -58,10 +84,6 @@ export default function Page() {
       window.location.href = "/signin";
     }
   }, []);
-
-  const [displayName, setDisplayName] = useState<string>("");
-  const [pages, setPages] = useState<IPage[]>([]);
-  const pageNameRefs = useRef<HTMLInputElement[]>([]);
 
   const getUserDisplayName = useCallback(() => {
     if (!userId) {
@@ -149,33 +171,39 @@ export default function Page() {
 
   return (
     <div className={styles.container}>
-      {/* <div className={styles.header}>
-        <div className={styles.title}>
-          <p>Welcome {displayName}!</p>
-        </div>
-        <div className={styles.subtitle}>
-          <span>First to Clemory? </span>
-          <span className={styles.inlineLink}>Take a tour!</span>
-        </div>
-        <div className={styles.subtitle}>
-          <span>Check out new features in </span>
-          <span className={styles.inlineLink}>v1.0.1</span>
-        </div>
-      </div> */}
       <div className={styles.body}>
         <div className={styles.title}>
           Dashboard
-          <div className={styles.titleSetting}>
+          <div
+            className={styles.titleSetting}
+            onClick={() => setIsEditingLayout(!isEditingLayout)}
+          >
             <ChevronDown size={20} color={colorTheme.sideBarFontColor} />
           </div>
         </div>
         <div className={styles.cellGrid}>
           {pages.map((page: IPage, index) => {
             return (
-              <div
+              <motion.div
                 className={styles.cellCard}
                 key={page.pageId}
                 onClick={() => handlePageClick(page.pageId)}
+                onContextMenu={displayMenu}
+                // vibration loop animation when editing layout
+                animate={
+                  isEditingLayout
+                    ? {
+                        rotate: [0, 1, -1, 1, -1, 0],
+                        transition: {
+                          duration: 0.5,
+                          repeat: Infinity,
+                          repeatType: "mirror",
+                        },
+                      }
+                    : {
+                        rotate: 0,
+                      }
+                }
               >
                 <div className={styles.cardImage}>
                   <Image
@@ -212,7 +240,18 @@ export default function Page() {
                   <span>Last edited: </span>
                   {parseCreateTime(page.createTime)}
                 </div>
-              </div>
+                <div className={styles.deleteBtn}>
+                  <div
+                    className={styles.deleteBtnIcon}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeletePage(page.pageId);
+                    }}
+                  >
+                    <MinusCircleIcon size={20} color={colorTheme.warningRed} />
+                  </div>
+                </div>
+              </motion.div>
             );
           })}
           <motion.div
@@ -224,6 +263,7 @@ export default function Page() {
             <span>Create a new page</span>
             <PlusIcon size={30} color="#4A4453" />
           </motion.div>
+          <ContextMenu />
         </div>
       </div>
     </div>
