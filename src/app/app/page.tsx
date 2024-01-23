@@ -42,6 +42,8 @@ import {
 import ContextMenu from "./Assets/ContextMenu/ContextMenu";
 import DeleteIcon from "./Assets/Nodes/Assets/DeleteIcon";
 import MinusCircleIcon from "./Assets/Icons/MinusCircleIcon";
+import CheckCircleIcon from "./Assets/Icons/CheckCircleIcon";
+import EllipsisIcon from "./Assets/Icons/EllipsisIcon";
 
 const MENU_ID = "menu-id";
 
@@ -120,9 +122,11 @@ export default function Page() {
     if (!userId) {
       return;
     }
-    deletePage(userId, pageId).then((res) => {
-      updateAllPages();
-    });
+    if (window.confirm("Are you sure you want to delete this page?")) {
+      deletePage(userId, pageId).then((res) => {
+        updateAllPages();
+      });
+    }
   }, []);
 
   const handleRenamePage = useCallback((pageInfo: IPage, index: number) => {
@@ -144,18 +148,22 @@ export default function Page() {
     });
   }, []);
 
-  const handlePageClick = useCallback((pageId: string) => {
-    if (!userId) {
-      return;
-    }
-    window.location.href = "/app/canvas/" + pageId;
-    generateMixpanelEvent(userId, mixpanelEventName.VIEW_PAGE, {
-      "Page ID": pageId,
-      "Page Name":
-        pageNameRefs.current[pages.findIndex((page) => page.pageId === pageId)]
-          .value,
-    });
-  }, []);
+  const handlePageClick = useCallback(
+    (pageId: string) => {
+      if (!userId || isEditingLayout) {
+        return;
+      }
+      window.location.href = "/app/canvas/" + pageId;
+      generateMixpanelEvent(userId, mixpanelEventName.VIEW_PAGE, {
+        "Page ID": pageId,
+        "Page Name":
+          pageNameRefs.current[
+            pages.findIndex((page) => page.pageId === pageId)
+          ].value,
+      });
+    },
+    [isEditingLayout]
+  );
 
   const parseCreateTime = useCallback((createTime: string) => {
     // 2021-09-07T15:00:00.000Z -> 2021-09-07 15:00:00
@@ -178,7 +186,11 @@ export default function Page() {
             className={styles.titleSetting}
             onClick={() => setIsEditingLayout(!isEditingLayout)}
           >
-            <ChevronDown size={20} color={colorTheme.sideBarFontColor} />
+            {isEditingLayout ? (
+              <CheckCircleIcon size={20} color={colorTheme.sideBarFontColor} />
+            ) : (
+              <EllipsisIcon size={20} color={colorTheme.sideBarFontColor} />
+            )}
           </div>
         </div>
         <div className={styles.cellGrid}>
@@ -240,17 +252,22 @@ export default function Page() {
                   <span>Last edited: </span>
                   {parseCreateTime(page.createTime)}
                 </div>
-                <div className={styles.deleteBtn}>
-                  <div
-                    className={styles.deleteBtnIcon}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeletePage(page.pageId);
-                    }}
-                  >
-                    <MinusCircleIcon size={20} color={colorTheme.warningRed} />
+                {isEditingLayout && (
+                  <div className={styles.deleteBtn}>
+                    <div
+                      className={styles.deleteBtnIcon}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeletePage(page.pageId);
+                      }}
+                    >
+                      <MinusCircleIcon
+                        size={20}
+                        color={colorTheme.warningRed}
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
               </motion.div>
             );
           })}
